@@ -6,6 +6,12 @@ import HardwareInterfaces.PinCodeTerminal;
 
 public class BicycleGarageManager {
 	private Database db;
+	
+	private BarcodePrinter barcodePrinter;
+	private ElectronicLock entryLock;
+	private ElectronicLock exitLock;
+	private PinCodeTerminal pinCodeTerminal;
+	
 	// Pass in logger with constructor as well or use an append function?
 	
 	/*
