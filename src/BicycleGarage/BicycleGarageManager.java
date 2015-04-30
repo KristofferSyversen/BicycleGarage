@@ -5,6 +5,16 @@ import HardwareInterfaces.ElectronicLock;
 import HardwareInterfaces.PinCodeTerminal;
 
 public class BicycleGarageManager {
+	private Database db;
+	// Pass in logger with constructor as well or use an append function?
+	
+	/*
+	 * 
+	 */
+	public BicycleGarageManager(Database db) {
+		this.db = db;
+	}
+	
 	/*
 	 * Register hardware so that BicycleGarageManager knows which drivers to
 	 * access.
@@ -21,7 +31,7 @@ public class BicycleGarageManager {
 	 * character can be '0', '1',... '9'.
 	 */
 	public void entryBarcode(String bicycleID) {
-		
+		// Implement this based on use cases. Here we can use all the database methods + open doors + blink LEDs.
 	}
 
 	/*
@@ -30,9 +40,12 @@ public class BicycleGarageManager {
 	 * be '0', '1',... '9'.
 	 */
 	public void exitBarcode(String bicycleID) {
-		
+		// Implement this based on use cases. We requre the user to scan a bascode twice when checking out a bike. This method will 
+		// therefore be called twice, solve this. Here we can use all the database methods + open doors + blink LEDs.
 	}
-
+	
+	
+	// We will never use this!
 	/*
 	 * Will be called when a user has pressed a key at the keypad at the entry
 	 * door. The following characters could be pressed: '0', '1',... '9', '*',
@@ -41,4 +54,5 @@ public class BicycleGarageManager {
 	public void entryCharacter(char c) {
 		
 	}
+	// ***********************
 }
