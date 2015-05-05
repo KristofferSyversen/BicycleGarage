@@ -43,7 +43,7 @@ abstract public class BarcodeReaderTestDriver implements BarcodeReader, ActionLi
 	 */
 	public BarcodeReaderTestDriver(String windowName) {
 		frame = new JFrame(windowName);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (JFrame.DO_NOTHING_ON_CLOSE); // WHY???
 				// make the window impossible to close
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());

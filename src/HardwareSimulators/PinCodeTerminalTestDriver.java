@@ -43,7 +43,7 @@ public class PinCodeTerminalTestDriver implements PinCodeTerminal, ActionListene
 	 * @param colour PinCodeTerminal.RED_LED or PinCodeTerminal.GREEN_LED 
 	 * @param lightTime Turn on LED for lightTime seconds
 	 */
-	public void lightLED(int colour, int lightTime) {
+	public void lightLED(int colour, int lightTime) { 
 		try {
 			if (colour == RED_LED) {
 				redLabel.setText("RED");	
@@ -66,7 +66,7 @@ public class PinCodeTerminalTestDriver implements PinCodeTerminal, ActionListene
 	 */
 	public PinCodeTerminalTestDriver() {
 		JFrame frame = new JFrame("Pin code terminal");
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (JFrame.DO_NOTHING_ON_CLOSE); // WHY??
 		          // make the window impossible to close
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());

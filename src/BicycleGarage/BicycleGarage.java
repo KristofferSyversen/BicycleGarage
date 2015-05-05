@@ -50,7 +50,7 @@ public class BicycleGarage {
 		}
 		
 		// Register hardware.
-		manager = new BicycleGarageManager(db);
+		manager = new BicycleGarageManager(db, logger);
 		
 		entryLock = new ElectronicLockTestDriver("Entry lock");
 		exitLock = new ElectronicLockTestDriver("Exit lock");

@@ -44,8 +44,6 @@ public class Database {
 		+ removeBicycle(Bicycle)
 		+ checkOutBicycle(Bicycle)
 		+ checkInBicycle(Bicycle)
-		+ findUser(name/id/User)
-		+ findBike(String/Bike)
 		+ getUserList()
 		+ getBikeList()
 	 */
@@ -71,8 +69,13 @@ public class Database {
 	 * @param bicycle
 	 */
 	public void checkInBicycle(Bicycle bicycle) {
-		// Check if already in garage first? Maybe use a boolean or throw an exception, our own? 
-		bicyclesInGarage.add(bicycle);
+		if(!bicyclesInGarage.contains(bicycle)) {
+			bicyclesInGarage.add(bicycle);
+		}
+	}
+	
+	public void checkOutBicycle(Bicycle bicycle) {
+		bicyclesInGarage.remove(bicycle);
 	}
 	
 	/**
@@ -81,5 +84,36 @@ public class Database {
 	public int generateBarcode() {
 		// Generate a barcode -> check if it is "free" -> return it.
 		return -1; 
+	}
+
+	public boolean findUser(String barcode) {
+		return false;
+	}
+
+	public User getUser(String barcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean inDatabase(String barcode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean findBicycle(String barcode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Bicycle getBicycle(String barcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	public boolean isInGarage(Bicycle bicycle) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

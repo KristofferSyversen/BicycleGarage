@@ -28,7 +28,7 @@ public class ElectronicLockTestDriver implements ElectronicLock {
 	 */
 	public ElectronicLockTestDriver(String doorIdentifier) {
 		JFrame frame = new JFrame(doorIdentifier);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (JFrame.DO_NOTHING_ON_CLOSE); // WHY???
 		JPanel panel = new JPanel();
 		frame.add(panel);
 		panel.add(state);

@@ -24,7 +24,7 @@ public class BarcodePrinterTestDriver implements BarcodePrinter {
 	 */
 	public BarcodePrinterTestDriver() {
 		frame = new JFrame("Bar code printer");
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (JFrame.DO_NOTHING_ON_CLOSE); // WHY???
 		
 		textArea = new JTextArea(5, 20);		
 		JScrollPane scrollPane = new JScrollPane(textArea); 
