@@ -27,7 +27,7 @@ public class BicycleGarageManager {
 	private int unlockTime = 60; // I cound not find this in the requirement specification?
 	private int timeBetweenBarcodes = 15;
 	
-	/*
+	/**
 	 * 
 	 */
 	public BicycleGarageManager(Database db, Logger logger) {
@@ -36,7 +36,7 @@ public class BicycleGarageManager {
 		this.timer = new Timer();
 	}
 
-	/*
+	/**
 	 * Register hardware so that BicycleGarageManager knows which drivers to
 	 * access.
 	 */
@@ -49,7 +49,7 @@ public class BicycleGarageManager {
 		this.pinCodeTerminal = terminal;
 	}
 
-	/*
+	/**
 	 * Will be called when a user has used the bar code reader at the entry
 	 * door. Bicycle ID should be a string of 5 characters, where every
 	 * character can be '0', '1',... '9'.
@@ -78,7 +78,7 @@ public class BicycleGarageManager {
 		}
 	}
 
-	/*
+	/**
 	 * Will be called when a user has used the bar code reader at the exit door.
 	 * Bicycle ID should be a string of 5 characters, where every character can
 	 * be '0', '1',... '9'.
@@ -156,7 +156,7 @@ public class BicycleGarageManager {
 	}
 
 	// We will never use this!
-	/*
+	/**
 	 * Will be called when a user has pressed a key at the keypad at the entry
 	 * door. The following characters could be pressed: '0', '1',... '9', '*',
 	 * '#'.
