@@ -63,7 +63,7 @@ public class BicycleGarageManager {
 		if (db.inDatabase(barcode)) { // Use case 5.1.1/5.1.2
 			
 			// Meh...
-			if(db.findBicycle(barcode)) {
+			if(db.bicycleExists(barcode)) {
 				logger.log("Checking in bicycle: " + barcode);
 				Bicycle bicycle = db.getBicycle(barcode);
 				db.checkInBicycle(bicycle);
@@ -98,18 +98,18 @@ public class BicycleGarageManager {
 				Bicycle bicycle = null;
 				User user = null;
 				
-				if(db.findBicycle(barcode)) {
+				if(db.bicycleExists(barcode)) {
 					bicycle = db.getBicycle(barcode);
-				} else if(db.findBicycle(firstBarcode)) {
+				} else if(db.bicycleExists(firstBarcode)) {
 					bicycle = db.getBicycle(barcode);
 				} else {
 					logger.log("Barcode error bicycle.");
 					System.exit(0); // meh...
 				}
 				
-				if(db.findUser(barcode)) {
+				if(db.userExists(barcode)) {
 					user = db.getUser(barcode);
-				} else if(db.findUser(firstBarcode)) {
+				} else if(db.userExists(firstBarcode)) {
 					user = db.getUser(firstBarcode);
 				} else {
 					logger.log("Barcode error user.");

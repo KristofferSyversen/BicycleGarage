@@ -2,6 +2,8 @@ package BicycleGarage;
 
 import java.util.ArrayList;
 
+import Utils.FileIO;
+
 /**
  * 
  * @author kristoffer
@@ -29,10 +31,11 @@ public class Database {
 	 */
 	public Database(String userFile) {
 		// Parse the user file and place the user data where it belongs.
-		
+		FileIO reader = new FileIO(userFile);
 		// Initialize the data containers.
-		
-				
+		users = new ArrayList<User>();
+		bicycles = new ArrayList<Bicycle>();
+		bicyclesInGarage = new ArrayList<Bicycle>();
 	}
 	
 	/*
@@ -53,15 +56,19 @@ public class Database {
 	 * @param user
 	 */
 	public void addUser(User user) {
-		users.add(user);
+		if(!users.contains(user)){
+			users.add(user);
+		}
 	}
 	
 	/**
 	 * 
 	 * @param bicycle
 	 */
-	public void addBicycles(Bicycle bicycle) {
-		bicycles.add(bicycle);
+	public void addBicycle(Bicycle bicycle) {
+		if(!bicycles.contains(bicycle)){
+			bicycles.add(bicycle);
+		}
 	}
 	
 	/**
@@ -81,12 +88,12 @@ public class Database {
 	/**
 	 * Generates a unique barcode.
 	 */
-	public int generateBarcode() {
+	public String generateBarcode() {
 		// Generate a barcode -> check if it is "free" -> return it.
-		return -1; 
+		return BarcodeGenerator.getCode(); 
 	}
 
-	public boolean findUser(String barcode) {
+	public boolean userExists(String barcode) {
 		return false;
 	}
 
@@ -100,7 +107,7 @@ public class Database {
 		return false;
 	}
 
-	public boolean findBicycle(String barcode) {
+	public boolean bicycleExists(String barcode) {
 		// TODO Auto-generated method stub
 		return false;
 	}
