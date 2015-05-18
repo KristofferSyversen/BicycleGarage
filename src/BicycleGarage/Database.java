@@ -61,6 +61,10 @@ public class Database {
 		}
 	}
 	
+	public boolean removeUser(User user){
+		return users.remove(user);
+	}
+	
 	/**
 	 * 
 	 * @param bicycle
@@ -69,6 +73,10 @@ public class Database {
 		if(!bicycles.contains(bicycle)){
 			bicycles.add(bicycle);
 		}
+	}
+	
+	public boolean removeBicycle(Bicycle bicycle){
+		return bicycles.remove(bicycle);
 	}
 	
 	/**
@@ -81,46 +89,67 @@ public class Database {
 		}
 	}
 	
-	public void checkOutBicycle(Bicycle bicycle) {
-		bicyclesInGarage.remove(bicycle);
+	public boolean checkOutBicycle(Bicycle bicycle) {
+		return bicyclesInGarage.remove(bicycle);
 	}
 	
 	/**
 	 * Generates a unique barcode.
 	 */
 	public String generateBarcode() {
-		// Generate a barcode -> check if it is "free" -> return it.
+		//TODO handle static variable overflow in BarcodeGenerator
 		return BarcodeGenerator.getCode(); 
 	}
 
 	public boolean userExists(String barcode) {
+		for(User u: users){
+			if(u.getBarcode().equals(barcode)){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public User getUser(String barcode) {
-		// TODO Auto-generated method stub
+		for(User u: users){
+			if(u.getBarcode().equals(barcode)){
+				return u;
+			}
+		}
 		return null;
 	}
 
 	public boolean inDatabase(String barcode) {
-		// TODO Auto-generated method stub
+		if(userExists(barcode)||bicycleExists(barcode)){
+			return true;
+		}
 		return false;
 	}
 
 	public boolean bicycleExists(String barcode) {
-		// TODO Auto-generated method stub
+		for(Bicycle b: bicycles){
+			if(b.getBarcode().equals(barcode)){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public Bicycle getBicycle(String barcode) {
-		// TODO Auto-generated method stub
+		for(Bicycle b: bicycles){
+			if(b.getBarcode().equals(barcode)){
+				return b;
+			}
+		}
 		return null;
 	}
 
-	
-
-	public boolean isInGarage(Bicycle bicycle) {
-		// TODO Auto-generated method stub
+	public boolean isInGarage(String barcode) {
+		for(Bicycle b: bicycles){
+			if(b.getBarcode().equals(barcode)){
+				return true;
+			}
+		}
 		return false;
 	}
 }
