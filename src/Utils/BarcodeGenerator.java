@@ -1,4 +1,4 @@
-package BicycleGarage;
+package Utils;
 
 public class BarcodeGenerator { //TODO Check how many numbers need to be returned
 	private static int codeNbr = 0;
