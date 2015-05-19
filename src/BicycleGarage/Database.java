@@ -39,6 +39,12 @@ public class Database {
 		bicyclesInGarage = new ArrayList<Bicycle>();
 	}
 	
+	public Database(){
+		users = new ArrayList<User>();
+		bicycles = new ArrayList<Bicycle>();
+		bicyclesInGarage = new ArrayList<Bicycle>();
+	}
+	
 	/*
 	 * Examples of methods to implement:
 	 
@@ -145,9 +151,9 @@ public class Database {
 		return null;
 	}
 
-	public boolean isInGarage(String barcode) {
+	public boolean isInGarage(Bicycle bicycle) { //TODO rewrite argument as String
 		for(Bicycle b: bicycles){
-			if(b.getBarcode().equals(barcode)){
+			if(b.getBarcode().equals(bicycle)){
 				return true;
 			}
 		}

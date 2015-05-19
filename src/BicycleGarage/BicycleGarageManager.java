@@ -89,6 +89,8 @@ public class BicycleGarageManager {
 		// therefore be called twice, solve this. Here we can use all the
 		// database methods + open doors + blink LEDs.
 		
+		//TODO Divide into help methods to make it more readable
+		
 		logger.log("ExitScanner scanned : " + barcode + ".");
 		
 		if (/*remove!*/!db.inDatabase(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
