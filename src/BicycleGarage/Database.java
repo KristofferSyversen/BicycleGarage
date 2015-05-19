@@ -126,7 +126,7 @@ public class Database {
 		return null;
 	}
 
-	public boolean inDatabase(String barcode) {
+	public boolean hasBicycleOrUser(String barcode) {
 		if(userExists(barcode)||bicycleExists(barcode)){
 			return true;
 		}

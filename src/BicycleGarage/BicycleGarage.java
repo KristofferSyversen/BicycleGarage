@@ -25,7 +25,7 @@ public class BicycleGarage {
 	private ElectronicLock exitLock;
 	private PinCodeTerminal terminal;
 	
-	private Database db;
+	private Database database;
 	private Logger logger;
 
 	// Get these values from a config file instead.
@@ -39,18 +39,17 @@ public class BicycleGarage {
 		
 		// Get filenames from config file instead.
 		
-		// Create logger.
 		logger = new Logger(logFile);
 		
 		// Load the bicycle and user files into the database.
 		try {
-			db = new Database(FileIO.readFromFile(databaseFile));
-		} catch(Exception e) { // Implement own exceptions?
+			database = new Database(FileIO.readFromFile(databaseFile));
+		} catch(Exception e) { //TODO apply more specific exception
 			logger.log("Unable to open database file!\n" + e);
 		}
 		
 		// Register hardware.
-		manager = new BicycleGarageManager(db, logger);
+		manager = new BicycleGarageManager(database, logger);
 		
 		entryLock = new ElectronicLockTestDriver("Entry lock");
 		exitLock = new ElectronicLockTestDriver("Exit lock");

@@ -3,7 +3,7 @@ package BicycleGarage;
 public class Bicycle {
 	private User owner;
 	private String barcode;
-	// More...
+
 	public Bicycle(User o, String b) {
 		owner = o;
 		barcode = b;

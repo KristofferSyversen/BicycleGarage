@@ -54,7 +54,7 @@ public class TerminalGUI {
 		s += "1. Add user\n";
 		s += "2. Add bicycle\n";
 		s += "3. Print barcode\n";
-		s += "4. Find\n";
+		s += "4. Find or show\n";
 		s += "5. Other\n";
 		s += "6. Exit";
 		System.out.println(s);
