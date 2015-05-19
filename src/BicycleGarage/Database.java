@@ -2,6 +2,7 @@ package BicycleGarage;
 
 import java.util.ArrayList;
 
+import Utils.BarcodeGenerator;
 import Utils.FileIO;
 
 /**
