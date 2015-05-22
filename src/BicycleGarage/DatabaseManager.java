@@ -9,68 +9,79 @@ public class DatabaseManager {
 		this.database = database;
 	}
 	
-	public void addUser(String n, int i, String b){
-		if(database.getUser(b).equals(null)){
-			User user = new User(n, i, b);
-			database.addUser(user);
-		} else {
-			//felmeddelande "User ID is already in use"
+	public void addUser(String n, int i, String b) throws Exception {
+		for (User u : database.getUserList()) {
+			if (u.getBarcode().equals(b)) {
+				throw new Exception("User barcode is already in use");
+			}
 		}
+		User user = new User(n, i, b);
+		database.addUser(user);
 	}
-	
-	public void removeUser(String b){
+
+	public void removeUser(String b) throws Exception {
 		User user = database.getUser(b);
-		if(database.hasBicycleOrUser(b)){
-			for(Bicycle b: user.getBicycles()){
-				database.removeBicycle(b);
+		if (database.userExists(b)) {
+			for (Bicycle bicycle : user.getBicycles()) {
+				database.removeBicycle(bicycle);
 			}
 			database.removeUser(user);
 		} else {
-			//Felmeddelande "User doesn't exist"
+			throw new Exception("User doesn't exist");
 		}
-		
+
 	}
-	
-	public void addBicycle(User o, String b){
+
+	public void addBicycle(User o, String b) throws Exception {
+		for (Bicycle bicycle : database.getBicycleList()) {
+			if (bicycle.getBarcode().equals(b)) {
+				throw new Exception("Bicycle barcode is already in use");
+			}
+		}
 		Bicycle bicycle = new Bicycle(o, b);
-		if(!database.bicycleExists(b)){
-			database.addBicycle(bicycle);
-		} else {
-			//Felmeddelande "Bicycle already registerd"
-		}
+		database.addBicycle(bicycle);
 	}
-	
-	public void removeBicycle(String b){
-		if(database.bicycleExists(b)){
+
+	public void removeBicycle(String b) throws Exception {
+		if (database.bicycleExists(b)) {
 			database.removeBicycle(database.getBicycle(b));
 		} else {
-			//felmeddelande "Bicycle doesn't exist"
+			throw new Exception("Bicycle doesn't exist");
 		}
 	}
-	
-	public ArrayList<User> getUserList(){
-		return database.getUserList();
-	}
-	
-	public ArrayList<Bicycle> getBicycleList(){
-		return database.getBicycleList();
-	}
-	
-	public void checkOutBicycle(String b){
+
+	public void checkOutBicycle(String b) throws Exception {
 		Bicycle bicycle = database.getBicycle(b);
-		if(database.isInGarage(bicycle)){
+		if (database.isInGarage(bicycle)) {
 			database.checkOutBicycle(bicycle);
 		} else {
-			//felmeddelande "Bicycle is not in garage"
+			throw new Exception("Bicycle is not in garage");
 		}
 	}
-	
-	public void checkInBicycle(String b){
+
+	public void checkInBicycle(String b) throws Exception {
 		Bicycle bicycle = database.getBicycle(b);
-		if(!database.isInGarage(bicycle)){
+		if (!database.isInGarage(bicycle)) {
 			database.checkInBicycle(bicycle);
 		} else {
-			//felmeddelande "Bicycle is already in garage"
+			throw new Exception("Bicycle is already in garage");
 		}
+	}
+
+	public ArrayList<User> getUserList() {
+		return database.getUserList();
+	}
+
+	public ArrayList<Bicycle> getBicycleList() {
+		return database.getBicycleList();
+	}
+
+	public User getUser(String b){
+		for(User user: getUserList()){
+			if(user.getBarcode().equals(b)){
+				return user;
+			}
+		}
+		return null;
 	}
 }
