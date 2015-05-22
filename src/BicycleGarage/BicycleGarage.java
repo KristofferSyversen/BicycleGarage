@@ -47,7 +47,7 @@ public class BicycleGarage {
 		
 		// Load the bicycle and user files into the database.
 		try {
-			database = new Database(FileIO.readFromFile(databaseFile));
+			database = new Database(databaseFile);
 		} catch(Exception e) { //TODO apply more specific exception
 			logger.log("Unable to open database file!\n" + e);
 		}

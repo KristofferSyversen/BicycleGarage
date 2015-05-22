@@ -1,5 +1,7 @@
 package Utils;
 
+import java.util.ArrayList;
+
 public class BarcodeGenerator {
 	private static int codeNbr = 0;
 	private static StringBuilder barcode;
@@ -19,7 +21,7 @@ public class BarcodeGenerator {
 			barcode.append("0");
 		}
 		barcode.reverse();
-		while()
+		//while()
 		codeNbr+=(codeNbr+1)%100000; //TODO Handle codeNbr growing larger than max
 		return barcode.toString();
 	}
