@@ -124,7 +124,6 @@ public class Database {
 	}
 	
 	public boolean writeToFile(String userFile, String bicycleFile){
-		boolean written = false;
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < users.size(); i++){
 			User user = users.get(i);
@@ -138,8 +137,7 @@ public class Database {
 		for(int i = 0; i < bicyclesInGarage.size(); i++){
 			sb.append(bicyclesInGarage.get(i).getBarcode() + '\n');
 		}
-		FileIO.writeToFile(userFile, sb.toString());
-		return written;
+		return FileIO.writeToFile(userFile, sb.toString());
 	}
 	
 	/**

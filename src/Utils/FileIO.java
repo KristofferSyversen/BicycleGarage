@@ -26,12 +26,15 @@ public class FileIO {
 		return sb.toString();
 	}
 	
-	public static void writeToFile(String filePath, String content){ // fileName?
+	public static boolean writeToFile(String filePath, String content){ // fileName?
+		boolean written = false;
 		try{
 			PrintWriter writer = new PrintWriter(filePath);
-			writer.print(content);;
+			writer.print(content);
+			written = true;
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+		return written;
 	}
 }
