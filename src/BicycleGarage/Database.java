@@ -45,11 +45,11 @@ public class Database {
 	 */
 	public Database(String userFile) {
 		// Parse the user file and place the user data where it belongs.
-		FileIO reader = new FileIO(userFile);
-		// Initialize the data containers.
 		users = new ArrayList<User>();
 		bicycles = new ArrayList<Bicycle>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
+		
+		parseData(FileIO.readFromFile(userFile));
 	}
 
 	public Database() {
@@ -65,7 +65,70 @@ public class Database {
 	 * removeBicycle(Bicycle) + checkOutBicycle(Bicycle) +
 	 * checkInBicycle(Bicycle) + getUserList() + getBikeList()
 	 */
-
+	
+	private void parseData(String data){
+		if(data.length() != 0){
+			String[] lines = data.split("\n");
+			
+			for(int i = 0; i < lines.length; i++){
+				int id = -1;
+				String line = lines[i];
+				String userName = parseField(line);
+				line = line.substring(userName.length() + 1);
+				try{
+					id = Integer.parseInt(parseField(line)); // throws NumberFormatException
+					line = line.substring(String.valueOf(id).length() + 1);
+				} catch (NumberFormatException e){
+					System.out.println("Kunde ej läsa id."); // Ta bort denna raden
+				}
+				
+				String userBarcode = parseField(line);
+				line = line.substring(userBarcode.length() + 1);
+				
+				if(!userName.isEmpty() && !userBarcode.isEmpty() && id != -1){
+					User user = new User(userName,id, userBarcode);
+					users.add(user);
+					
+					while(line.length() > 0){
+						String bicycleBarcode = parseField(line);
+						Bicycle bicycle = new Bicycle(user, bicycleBarcode);
+						user.addBicycle(bicycle);
+						bicycles.add(bicycle);
+						line = line.substring(bicycleBarcode.length() + 1);
+					}
+				}
+			}
+		}
+	}
+	
+	private String parseField(String line){
+		String field = "";
+		for(int i = 0; i < line.length(); i++){
+			char ch = line.charAt(i);
+			if(ch == '¤'){
+				break;
+			} else {
+				field += line.charAt(i);	// SPLIIT
+			}			
+		}
+		return field;
+	}
+	
+	public boolean writeToFile(String userFile, String bicycleFile){
+		boolean written = false;
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < users.size(); i++){
+			User user = users.get(i);
+			sb.append(user.getName() + '¤' + user.getId() + '¤');
+			ArrayList<Bicycle> userBicycles= user.getBicycles();
+			for(int j = 0; j < userBicycles.size(); j++){
+				sb.append(userBicycles.get(i).getBarcode() + '¤');
+			}
+		}
+		FileIO.writeToFile(userFile, sb.toString());
+		return written;
+	}
+	
 	/**
 	 * 
 	 * @param user
