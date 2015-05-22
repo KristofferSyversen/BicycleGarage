@@ -1,5 +1,7 @@
 package Test;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -27,6 +29,13 @@ public class DatabaseManagerTester {
 	}
 	
 	@Test
+	public void testGetLists(){
+		//TODO implement getter for bicycles in garage in dbManager
+		assertEquals(users, dbManager.getUserList());
+		assertEquals(bicycles, dbManager.getBicycleList());
+	}
+	
+	@Test
 	public void testAddUser(){
 		User newUser = new User("Charlie", 4, BarcodeGenerator.getCode());
 		try {
@@ -36,7 +45,8 @@ public class DatabaseManagerTester {
 		}
 		users.add(newUser);
 		for(User u: users){
-			//TODO insert proper assertS
+			//TODO insert proper asserts
 		}
+		fail("Not implemented");	
 	}
 }
