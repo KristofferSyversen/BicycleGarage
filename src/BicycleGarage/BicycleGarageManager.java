@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import HardwareInterfaces.BarcodePrinter;
 import HardwareInterfaces.ElectronicLock;
 import HardwareInterfaces.PinCodeTerminal;
+import Utils.Constants;
 import Utils.Logger;
 
 public class BicycleGarageManager {
@@ -22,10 +23,7 @@ public class BicycleGarageManager {
 	private boolean firstBarcodeScanned = false;
 	private String firstBarcode = "empty";
 
-	// Specification specific.
-	private int RedLEDLightTime = 3;
-	private int unlockTime = 60; // I cound not find this in the requirement specification?
-	private int timeBetweenBarcodes = 15;
+
 	
 	/**
 	 * 
@@ -62,19 +60,23 @@ public class BicycleGarageManager {
 
 		if (database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2
 			
-			// Meh...
-			if(database.bicycleExists(barcode)) {
+			
+			Bicycle bicycle = database.getBicycle(barcode);
+			if(bicycle == null) {
 				logger.log("Checking in bicycle: " + barcode);
-				Bicycle bicycle = database.getBicycle(barcode);
 				database.checkInBicycle(bicycle);
+				
+				logger.log("Unlocking entry door lock for registered barcode: " + barcode + ".");
+				entryLock.open(Constants.UNLOCK_TIME);
+			} else {
+				logger.log("Bicycle: " + barcode + " not found.");
 			}
 		
-			logger.log("Unlocking entry door lock for registered barcode: " + barcode + ".");
-			entryLock.open(unlockTime);
+			
 		} else {
 			// Barcode not registered to either a bicycle or a user.
 			logger.log("Unknown barcode scanned @ entry: " + barcode + ".");
-			pinCodeTerminal.lightLED(PinCodeTerminal.RED_LED,RedLEDLightTime); // Light RED_LED for 3 seconds according to spec.
+			pinCodeTerminal.lightLED(PinCodeTerminal.RED_LED,Constants.RED_LED_TIME); // Light RED_LED for 3 seconds according to spec.
 		}
 	}
 
@@ -93,7 +95,7 @@ public class BicycleGarageManager {
 		
 		logger.log("ExitScanner scanned : " + barcode + ".");
 		
-		if (/*remove!*/!database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
+		if (/*remove"!"*/!database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
 			if(firstBarcodeScanned) { // The first barcode is already scanned and stored.
 				logger.log("Secound barcode scanned: " + barcode);
 				
@@ -121,8 +123,9 @@ public class BicycleGarageManager {
 				if(user.ownsBicycle(bicycle)) {
 					if(database.isInGarage(bicycle)) {
 						logger.log("Checking out bicycle.");
+						
+						exitLock.open(Constants.UNLOCK_TIME);
 						database.checkOutBicycle(bicycle);
-						exitLock.open(unlockTime);
 					} else {
 						logger.log("Bicycle not in garage database.");
 					}
@@ -137,7 +140,7 @@ public class BicycleGarageManager {
 				firstBarcode = barcode;
 				firstBarcodeScanned = true;
 				
-				logger.log("Barcode timer started, reseting in " + timeBetweenBarcodes + " seconds.");
+				logger.log("Barcode timer started, reseting in " + Constants.TIME_BETWEEN_BARCODES + " seconds.");
 				
 				timer.schedule(new TimerTask() {
 					  @Override
@@ -147,7 +150,7 @@ public class BicycleGarageManager {
 						  
 						  logger.log("Barcode timer stopping, resetting first barcode.");
 					  }
-					}, timeBetweenBarcodes*1000);
+					}, Constants.TIME_BETWEEN_BARCODES*1000);
 			}
 		} else {
 			// Barcode not registered to either a bicycle or a user.
