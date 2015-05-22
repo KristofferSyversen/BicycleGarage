@@ -9,13 +9,12 @@ public class DatabaseManager {
 		this.database = database;
 	}
 	
-	public void addUser(String n, int i, String b) throws Exception {
+	public void addUser(User user) throws Exception {
 		for (User u : database.getUserList()) {
-			if (u.getBarcode().equals(b)) {
+			if (u.equals(user)) {
 				throw new Exception("User barcode is already in use");
 			}
 		}
-		User user = new User(n, i, b);
 		database.addUser(user);
 	}
 
