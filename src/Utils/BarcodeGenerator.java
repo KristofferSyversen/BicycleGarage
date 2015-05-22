@@ -3,6 +3,7 @@ package Utils;
 public class BarcodeGenerator {
 	private static int codeNbr = 0;
 	private static StringBuilder barcode;
+	private static ArrayList<Integer> takenBarcodes;
 	
 	/**
 	 * Returns a number starting from zero upwards. While the length of the number is
@@ -11,19 +12,23 @@ public class BarcodeGenerator {
 	 */
 	public static String getCode() {
 		
-		if(codeNbr>99999){
-			//ERROR
-		}
 		barcode = new StringBuilder();
 		barcode.append(codeNbr);
+		barcode.reverse();
 		while(barcode.length() < 5){
 			barcode.append("0");
 		}
-		codeNbr++; //TODO Handle codeNbr growing larger than max
+		barcode.reverse();
+		while()
+		codeNbr+=(codeNbr+1)%100000; //TODO Handle codeNbr growing larger than max
 		return barcode.toString();
 	}
 	
 	public static void setCodeNbr(int newNbr){
 		codeNbr = newNbr;
+	}
+	
+	public static void setBarcodeAsAvailable(String barcode){
+		//TODO
 	}
 }

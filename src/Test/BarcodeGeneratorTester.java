@@ -24,7 +24,7 @@ public class BarcodeGeneratorTester {
 		}
 		for (Integer i = 0; i < 100000; i++) {
 			String zeros = "";
-			while ((i.toString() + zeros).length() < 5) {
+			while ((zeros + i.toString()).length() < 5) {
 				zeros += "0";
 			}
 
