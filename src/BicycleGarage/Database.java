@@ -27,7 +27,7 @@ public class Database {
 
 	
 	/**
-	 * 
+	 * 	
 	 * @param userFile
 	 */
 	public Database(String userFile) {
@@ -158,5 +158,13 @@ public class Database {
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<User> getUserList(){
+		return users;
+	}
+	
+	public ArrayList<Bicycle> getBicycleList(){
+		return bicycles;
 	}
 }
