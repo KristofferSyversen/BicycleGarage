@@ -6,17 +6,17 @@ public class User {
 	private String name;
 	private int id;
 	private String barcode;
-	private ArrayList<Bicycle> bikes;
+	private ArrayList<Bicycle> bicycles;
 
 	public User(String n, int i, String b){
 		name = n;
 		id = i;
 		barcode = b;
-		bikes = new ArrayList<Bicycle>();
+		bicycles = new ArrayList<Bicycle>();
 	}
 	
 	public void addBicycle(Bicycle b){
-		bikes.add(b);
+		bicycles.add(b);
 	}
 	
 	public String getName(){
@@ -32,11 +32,15 @@ public class User {
 	}
 	
 	public boolean ownsBicycle(Bicycle bicycle) {
-		for(Bicycle b: bikes){
+		for(Bicycle b: bicycles){
 			if(b.equals(bicycle)){
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<Bicycle> getBicycles(){
+		return bicycles;
 	}
 }
