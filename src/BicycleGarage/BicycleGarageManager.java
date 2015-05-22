@@ -165,6 +165,14 @@ public class BicycleGarageManager {
 		
 		
 	}
+	
+	public void unlockEntryDoor(int time) {
+		entryLock.open(time);
+	}
+	
+	public void unlockExitDoor(int time) {
+		exitLock.open(time);
+	}
 
 	// We will never use this!
 	/**

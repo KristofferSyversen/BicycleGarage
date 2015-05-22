@@ -9,12 +9,15 @@ public class DatabaseManager {
 		this.database = database;
 	}
 	
-	public void addUser(User user) throws Exception {
-		for (User u : database.getUserList()) {
-			if (u.equals(user)) {
-				throw new Exception("User barcode is already in use");
-			}
-		}
+	public void addUser(User user) {
+		
+		//TODO: change this, commented it out to test other things!!!
+		
+//		for (User u : database.getUserList()) {
+//			if (u.equals(user)) {
+//				throw new Exception("User barcode is already in use");
+//			}
+//		}
 		database.addUser(user);
 	}
 
@@ -81,5 +84,9 @@ public class DatabaseManager {
 			}
 		}
 		return null;
+	}
+
+	public ArrayList<Bicycle> getBicycleInGarageList() {
+		return database.getBicyclesInGarageList();
 	}
 }

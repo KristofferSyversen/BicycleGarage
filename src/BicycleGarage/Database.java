@@ -49,7 +49,11 @@ public class Database {
 		bicycles = new ArrayList<Bicycle>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
 		
-		parseData(FileIO.readFromFile(userFile));
+		try {
+			parseData(FileIO.readFromFile(userFile));
+		} catch(Exception e) {
+			
+		}
 	}
 
 	public Database() {
@@ -256,6 +260,10 @@ public class Database {
 	public ArrayList<Bicycle> getBicycleList() {
 		return bicycles;
 	}
+	
+	public ArrayList<Bicycle> getBicyclesInGarageList() {
+		return bicyclesInGarage;
+	}
 
 	public static Database databaseSetup() {
 		// Create users
@@ -279,6 +287,11 @@ public class Database {
 		bicycles.add(bmx);
 		bicyclesInGarage.add(old);
 		bicyclesInGarage.add(bmx);
+		
+		user1.addBicycle(bmx);
+		user1.addBicycle(mc);
+		user2.addBicycle(old);
+		user1.addBicycle(hoj);
 
 		Database database = new Database(users, bicycles, bicyclesInGarage);
 		return database;

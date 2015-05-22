@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -13,19 +12,24 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
+import BicycleGarage.Bicycle;
 import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.DatabaseManager;
-
-
 
 public class GUI {
 	private DatabaseManager ddm;
 	private BicycleGarageManager bgm;
-	
+
 	private JList<String> itemList;
+	private DefaultListModel listModel;
 	
+	
+	//TODO: Change this to something immutable.
+	private JTextPane statusBar;
+
 	private JMenuBar menuBar;
 	private JMenu menu, submenu;
 	private JMenuItem menuItem;
@@ -36,100 +40,116 @@ public class GUI {
 		this.ddm = ddm;
 		this.bgm = bgm;
 
-		JFrame mainFrame = new JFrame("Bicycle garage operator controll system.");
+		JFrame mainFrame = new JFrame(
+				"Bicycle garage operator controll system.");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		itemList = new JList<String>();
-		mainFrame.add(itemList, BorderLayout.NORTH);
-		
-		
 
-		//Create the menu bar.
+
+		listModel = new DefaultListModel();
+		itemList = new JList<String>(listModel);
+		statusBar = new JTextPane();
+
+		statusBar.setText("Bicycles in the garage.");
+		for (Bicycle bicycle : ddm.getBicycleInGarageList()) {
+			listModel.addElement(bicycle.toString());
+		}
+		
+		
+		
+		mainFrame.add(statusBar, BorderLayout.NORTH);		
+		mainFrame.add(itemList, BorderLayout.CENTER);
+
+		// Create the menu bar.
 		menuBar = new JMenuBar();
 
-		//Build the first menu.
+		// Database.
 		menu = new JMenu("Database");
 		menu.setMnemonic(KeyEvent.VK_D);
 		menu.getAccessibleContext().setAccessibleDescription(
-		        "Menu items to controll the database");
+				"Menu items to controll the database");
 		menuBar.add(menu);
 
-		//Add user
+		// Add user
 		menuItem = new AddUserMenuItem("Add user", ddm);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "Adds a user to the database.");
-		menu.add(menuItem);
-		
-		//Remove user
-		menuItem = new RemoveUserMenuItem("Remove user", ddm);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "removes a user from the database.");
+				"Adds a user to the database.");
 		menu.add(menuItem);
 
-//		menuItem = new JMenuItem("Both text and icon",
-//		                         new ImageIcon("images/middle.gif"));
-//		menuItem.setMnemonic(KeyEvent.VK_B);
-//		menu.add(menuItem);
-//
-//		menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-//		menuItem.setMnemonic(KeyEvent.VK_D);
-//		menu.add(menuItem);
-//
-//		//a group of radio button menu items
-//		menu.addSeparator();
-//		ButtonGroup group = new ButtonGroup();
-//		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-//		rbMenuItem.setSelected(true);
-//		rbMenuItem.setMnemonic(KeyEvent.VK_R);
-//		group.add(rbMenuItem);
-//		menu.add(rbMenuItem);
-//
-//		rbMenuItem = new JRadioButtonMenuItem("Another one");
-//		rbMenuItem.setMnemonic(KeyEvent.VK_O);
-//		group.add(rbMenuItem);
-//		menu.add(rbMenuItem);
-//
-//		//a group of check box menu items
-//		menu.addSeparator();
-//		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-//		cbMenuItem.setMnemonic(KeyEvent.VK_C);
-//		menu.add(cbMenuItem);
-//
-//		cbMenuItem = new JCheckBoxMenuItem("Another one");
-//		cbMenuItem.setMnemonic(KeyEvent.VK_H);
-//		menu.add(cbMenuItem);
-//
-//		//a submenu
-//		menu.addSeparator();
-//		submenu = new JMenu("A submenu");
-//		submenu.setMnemonic(KeyEvent.VK_S);
-//
-//		menuItem = new JMenuItem("An item in the submenu");
-//		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-//		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-//		submenu.add(menuItem);
-//
-//		menuItem = new JMenuItem("Another item");
-//		submenu.add(menuItem);
-//		menu.add(submenu);
-//
-		//Build second menu in the menu bar.
+		// Remove user
+		menuItem = new RemoveUserMenuItem("Remove user", ddm);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"removes a user from the database.");
+		menu.add(menuItem);
+
+		// -----
+
+		// View.
+		menu = new JMenu("View");
+		menu.setMnemonic(KeyEvent.VK_V);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"Menu items to controll the database");
+		menuBar.add(menu);
+
+		// List Users
+		menuItem = new ChangeListContentMenuItem("List users", ddm, statusBar, listModel, 0);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Lists users.");
+		menu.add(menuItem);
+
+		// List all bicycles
+		menuItem = new ChangeListContentMenuItem("List bicycles", ddm, statusBar, listModel, 1);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Lists bicycles");
+		menu.add(menuItem);
+
+		// List bicycles in garage
+		menuItem = new ChangeListContentMenuItem("List bicycles in garage", ddm, statusBar, listModel, 2);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"List bicycles in garage.");
+		menu.add(menuItem);
+
+		// -----
+
+		// Hardware.
 		menu = new JMenu("Hardware");
 		menu.setMnemonic(KeyEvent.VK_H);
-		menu.getAccessibleContext().setAccessibleDescription("This menu controlls the hardware");
-		menuBar.add(menu);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"This menu controlls the hardware");
 
+		// Unlock entry door
+		menuItem = new UnlockDoorMenuItem("Unlock entry door", bgm, 0);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Unlocks the entry door.");
+		menu.add(menuItem);
+
+		// Unlock exit door
+		menuItem = new UnlockDoorMenuItem("Unlock exit door", bgm, 1);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Unlocks the exit door.");
+		menu.add(menuItem);
+
+		menuBar.add(menu);
 		mainFrame.setJMenuBar(menuBar);
 
-		
-		/////
-		
-		
+		// ///
+
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 	}
+
+	
 }
