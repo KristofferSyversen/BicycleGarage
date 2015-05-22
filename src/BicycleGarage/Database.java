@@ -25,6 +25,17 @@ public class Database {
 	private ArrayList<Bicycle> bicycles; //
 	private ArrayList<Bicycle> bicyclesInGarage;
 
+	/**
+	 * Constructor used primarily for testing
+	 * @param users
+	 * @param bicycles
+	 * @param bicyclesInGarage
+	 */
+	public Database(ArrayList<User> users, ArrayList<Bicycle> bicycles, ArrayList<Bicycle> bicyclesInGarage){
+		this.users = users;
+		this.bicycles = bicycles;
+		this.bicyclesInGarage = bicyclesInGarage;
+	}
 	
 	/**
 	 * 	

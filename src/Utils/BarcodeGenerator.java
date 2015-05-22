@@ -4,6 +4,11 @@ public class BarcodeGenerator {
 	private static int codeNbr = 0;
 	private static StringBuilder barcode;
 	
+	/**
+	 * Returns a number starting from zero upwards. While the length of the number is
+	 * less than 5, zeros will be appended to the end of the number until it has length 5.
+	 * @return barcode
+	 */
 	public static String getCode() {
 		
 		if(codeNbr>99999){
