@@ -68,7 +68,8 @@ public class Database {
 	
 	private void parseData(String data){
 		if(data.length() != 0){
-			String[] lines = data.split("\n");
+			String[] dataParts = data.split("%%%%%");
+			String[] lines = dataParts[0].split("\n");
 			
 			for(int i = 0; i < lines.length; i++){
 				int id = -1;
@@ -79,16 +80,16 @@ public class Database {
 					id = Integer.parseInt(parseField(line)); // throws NumberFormatException
 					line = line.substring(String.valueOf(id).length() + 1);
 				} catch (NumberFormatException e){
-					System.out.println("Kunde ej läsa id."); // Ta bort denna raden
+					// Ignore incomplete user
 				}
 				
 				String userBarcode = parseField(line);
 				line = line.substring(userBarcode.length() + 1);
-				
+					
 				if(!userName.isEmpty() && !userBarcode.isEmpty() && id != -1){
 					User user = new User(userName,id, userBarcode);
 					users.add(user);
-					
+						
 					while(line.length() > 0){
 						String bicycleBarcode = parseField(line);
 						Bicycle bicycle = new Bicycle(user, bicycleBarcode);
@@ -96,6 +97,14 @@ public class Database {
 						bicycles.add(bicycle);
 						line = line.substring(bicycleBarcode.length() + 1);
 					}
+				}
+			}
+			lines = dataParts[1].split("\n");
+			for(int i = 0; i < lines.length; i++){
+				String line = lines[i];
+				if(line.length() > 0){
+					Bicycle bicycle = getBicycle(line);
+					if(bicycle != null) bicyclesInGarage.add(bicycle);
 				}
 			}
 		}
@@ -124,6 +133,10 @@ public class Database {
 			for(int j = 0; j < userBicycles.size(); j++){
 				sb.append(userBicycles.get(i).getBarcode() + '%');
 			}
+		}
+		sb.append("%%%%%" + '\n');
+		for(int i = 0; i < bicyclesInGarage.size(); i++){
+			sb.append(bicyclesInGarage.get(i).getBarcode() + '\n');
 		}
 		FileIO.writeToFile(userFile, sb.toString());
 		return written;
