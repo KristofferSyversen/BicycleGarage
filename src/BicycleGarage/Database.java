@@ -62,10 +62,12 @@ public class Database {
 	 * 
 	 * @param user
 	 */
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 		if(!users.contains(user)){
 			users.add(user);
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean removeUser(User user){
@@ -76,10 +78,12 @@ public class Database {
 	 * 
 	 * @param bicycle
 	 */
-	public void addBicycle(Bicycle bicycle) {
+	public boolean addBicycle(Bicycle bicycle) {
 		if(!bicycles.contains(bicycle)){
 			bicycles.add(bicycle);
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean removeBicycle(Bicycle bicycle){
@@ -90,10 +94,12 @@ public class Database {
 	 * 
 	 * @param bicycle
 	 */
-	public void checkInBicycle(Bicycle bicycle) {
+	public boolean checkInBicycle(Bicycle bicycle) {
 		if(!bicyclesInGarage.contains(bicycle)) {
 			bicyclesInGarage.add(bicycle);
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean checkOutBicycle(Bicycle bicycle) {
