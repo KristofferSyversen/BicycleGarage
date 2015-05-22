@@ -1,5 +1,6 @@
 package BicycleGarage;
 
+import GUI.GUI;
 import HardwareInterfaces.BarcodePrinter;
 import HardwareInterfaces.BarcodeReader;
 import HardwareInterfaces.ElectronicLock;
@@ -20,13 +21,16 @@ import Utils.Logger;
 public class BicycleGarage {
 	
 	// Hardware
-	private BicycleGarageManager manager;
+	private BicycleGarageManager bgm;
 	private ElectronicLock entryLock;
 	private ElectronicLock exitLock;
 	private PinCodeTerminal terminal;
 	
+	private DatabaseManager dbm;
 	private Database database;
 	private Logger logger;
+	
+	private GUI gui;
 
 	// Get these values from a config file instead.
 	private String logFile = "logFile.log";
@@ -48,8 +52,11 @@ public class BicycleGarage {
 			logger.log("Unable to open database file!\n" + e);
 		}
 		
+		
+		dbm = new DatabaseManager(database);
+		
 		// Register hardware.
-		manager = new BicycleGarageManager(database, logger);
+		bgm = new BicycleGarageManager(database, logger);
 		
 		entryLock = new ElectronicLockTestDriver("Entry lock");
 		exitLock = new ElectronicLockTestDriver("Exit lock");
@@ -57,13 +64,13 @@ public class BicycleGarage {
 		BarcodePrinter printer = new BarcodePrinterTestDriver();
 		terminal = new PinCodeTerminalTestDriver();
 		
-		manager.registerHardwareDrivers(printer, entryLock, exitLock, terminal);
-		terminal.register(manager);
+		bgm.registerHardwareDrivers(printer, entryLock, exitLock, terminal);
+		terminal.register(bgm);
 		
 		BarcodeReader readerEntry = new BarcodeReaderEntryTestDriver();
 		BarcodeReader readerExit = new BarcodeReaderExitTestDriver();
-		readerEntry.register(manager);
-		readerExit.register(manager);
+		readerEntry.register(bgm);
+		readerExit.register(bgm);
 	}
 	
 	/**
@@ -73,6 +80,9 @@ public class BicycleGarage {
 		// Start the operator GUI which will use the database.
 		
 		// Here we can use all the public database methods + blink the LED and open the door.
+		
+		gui = new GUI(dbm, bgm);
+		
 	}
 	
 	public void exit() {
