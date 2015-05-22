@@ -2,7 +2,7 @@ package BicycleGarage;
 
 import java.util.ArrayList;
 
-public class User {//bröd
+public class User {
 	private String name;
 	private int id;
 	private String barcode;

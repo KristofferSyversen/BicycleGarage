@@ -62,16 +62,12 @@ public class BicycleGarageManager {
 			
 			
 			Bicycle bicycle = database.getBicycle(barcode);
-			if(bicycle == null) {
+			if(bicycle != null) {
 				logger.log("Checking in bicycle: " + barcode);
 				database.checkInBicycle(bicycle);
-				
-				logger.log("Unlocking entry door lock for registered barcode: " + barcode + ".");
-				entryLock.open(Constants.UNLOCK_TIME);
-			} else {
-				logger.log("Bicycle: " + barcode + " not found.");
-			}
-		
+			}	
+			logger.log("Unlocking entry door lock for registered barcode: " + barcode + ".");
+			entryLock.open(Constants.UNLOCK_TIME);
 			
 		} else {
 			// Barcode not registered to either a bicycle or a user.
@@ -79,7 +75,25 @@ public class BicycleGarageManager {
 			pinCodeTerminal.lightLED(PinCodeTerminal.RED_LED,Constants.RED_LED_TIME); // Light RED_LED for 3 seconds according to spec.
 		}
 	}
-
+	private Bicycle findBicycle(String barcode1, String barcode2){
+		if(database.bicycleExists(barcode1)) {
+			return database.getBicycle(barcode1);
+		} else if(database.bicycleExists(barcode2)) {
+			return database.getBicycle(barcode2);
+		} else {
+			return null;
+		}
+	}
+	
+	private User findUser(String barcode1, String barcode2){
+		if(database.userExists(barcode1)) {
+			return database.getUser(barcode1);
+		} else if(database.bicycleExists(barcode2)) {
+			return database.getUser(barcode2);
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * Will be called when a user has used the bar code reader at the exit door.
 	 * Bicycle ID should be a string of 5 characters, where every character can
@@ -97,27 +111,17 @@ public class BicycleGarageManager {
 		
 		if (/*remove"!"*/!database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
 			if(firstBarcodeScanned) { // The first barcode is already scanned and stored.
-				logger.log("Secound barcode scanned: " + barcode);
+				logger.log("Second barcode scanned: " + barcode);
 				
 				Bicycle bicycle = null;
 				User user = null;
 				
-				if(database.bicycleExists(barcode)) {
-					bicycle = database.getBicycle(barcode);
-				} else if(database.bicycleExists(firstBarcode)) {
-					bicycle = database.getBicycle(barcode);
-				} else {
-					logger.log("Barcode error bicycle.");
-					System.exit(0); // meh...
-				}
+				bicycle = findBicycle(barcode, firstBarcode);
+				user = findUser(barcode, firstBarcode);
 				
-				if(database.userExists(barcode)) {
-					user = database.getUser(barcode);
-				} else if(database.userExists(firstBarcode)) {
-					user = database.getUser(firstBarcode);
-				} else {
-					logger.log("Barcode error user.");
-					System.exit(0); // meh...
+				if(bicycle == null||user == null){
+					logger.log("Barcode for user and/or bicycle missing");
+					return;
 				}
 				
 				if(user.ownsBicycle(bicycle)) {
@@ -127,13 +131,15 @@ public class BicycleGarageManager {
 						exitLock.open(Constants.UNLOCK_TIME);
 						database.checkOutBicycle(bicycle);
 					} else {
-						logger.log("Bicycle not in garage database.");
+						logger.log("Bicycle not checked in.");
 					}
 					
 				} else {
 					logger.log("User does not own the specified bicycle!");
 				}
-				
+				firstBarcodeScanned = false;
+				firstBarcode = "empty";
+				timer.purge();
 				
 			} else { // First time a barcode is scanned, use this branch to set a timer and store the barcode.
 				
