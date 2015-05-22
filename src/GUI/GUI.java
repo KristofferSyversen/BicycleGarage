@@ -54,66 +54,73 @@ public class GUI {
 		        "Menu items to controll the database");
 		menuBar.add(menu);
 
-		//a group of JMenuItems
+		//Add user
 		menuItem = new AddUserMenuItem("Add user", ddm);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "This doesn't really do anything");
+		        "Adds a user to the database.");
 		menu.add(menuItem);
-
-		menuItem = new JMenuItem("Both text and icon",
-		                         new ImageIcon("images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_B);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_D);
-		menu.add(menuItem);
-
-		//a group of radio button menu items
-		menu.addSeparator();
-		ButtonGroup group = new ButtonGroup();
-		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-		rbMenuItem.setSelected(true);
-		rbMenuItem.setMnemonic(KeyEvent.VK_R);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		rbMenuItem = new JRadioButtonMenuItem("Another one");
-		rbMenuItem.setMnemonic(KeyEvent.VK_O);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		//a group of check box menu items
-		menu.addSeparator();
-		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-		cbMenuItem.setMnemonic(KeyEvent.VK_C);
-		menu.add(cbMenuItem);
-
-		cbMenuItem = new JCheckBoxMenuItem("Another one");
-		cbMenuItem.setMnemonic(KeyEvent.VK_H);
-		menu.add(cbMenuItem);
-
-		//a submenu
-		menu.addSeparator();
-		submenu = new JMenu("A submenu");
-		submenu.setMnemonic(KeyEvent.VK_S);
-
-		menuItem = new JMenuItem("An item in the submenu");
+		
+		//Remove user
+		menuItem = new RemoveUserMenuItem("Remove user", ddm);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-		submenu.add(menuItem);
+		menuItem.getAccessibleContext().setAccessibleDescription(
+		        "removes a user from the database.");
+		menu.add(menuItem);
 
-		menuItem = new JMenuItem("Another item");
-		submenu.add(menuItem);
-		menu.add(submenu);
-
+//		menuItem = new JMenuItem("Both text and icon",
+//		                         new ImageIcon("images/middle.gif"));
+//		menuItem.setMnemonic(KeyEvent.VK_B);
+//		menu.add(menuItem);
+//
+//		menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
+//		menuItem.setMnemonic(KeyEvent.VK_D);
+//		menu.add(menuItem);
+//
+//		//a group of radio button menu items
+//		menu.addSeparator();
+//		ButtonGroup group = new ButtonGroup();
+//		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
+//		rbMenuItem.setSelected(true);
+//		rbMenuItem.setMnemonic(KeyEvent.VK_R);
+//		group.add(rbMenuItem);
+//		menu.add(rbMenuItem);
+//
+//		rbMenuItem = new JRadioButtonMenuItem("Another one");
+//		rbMenuItem.setMnemonic(KeyEvent.VK_O);
+//		group.add(rbMenuItem);
+//		menu.add(rbMenuItem);
+//
+//		//a group of check box menu items
+//		menu.addSeparator();
+//		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
+//		cbMenuItem.setMnemonic(KeyEvent.VK_C);
+//		menu.add(cbMenuItem);
+//
+//		cbMenuItem = new JCheckBoxMenuItem("Another one");
+//		cbMenuItem.setMnemonic(KeyEvent.VK_H);
+//		menu.add(cbMenuItem);
+//
+//		//a submenu
+//		menu.addSeparator();
+//		submenu = new JMenu("A submenu");
+//		submenu.setMnemonic(KeyEvent.VK_S);
+//
+//		menuItem = new JMenuItem("An item in the submenu");
+//		menuItem.setAccelerator(KeyStroke.getKeyStroke(
+//		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
+//		submenu.add(menuItem);
+//
+//		menuItem = new JMenuItem("Another item");
+//		submenu.add(menuItem);
+//		menu.add(submenu);
+//
 		//Build second menu in the menu bar.
-		menu = new JMenu("Another Menu");
-		menu.setMnemonic(KeyEvent.VK_N);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "This menu does nothing");
+		menu = new JMenu("Hardware");
+		menu.setMnemonic(KeyEvent.VK_H);
+		menu.getAccessibleContext().setAccessibleDescription("This menu controlls the hardware");
 		menuBar.add(menu);
 
 		mainFrame.setJMenuBar(menuBar);

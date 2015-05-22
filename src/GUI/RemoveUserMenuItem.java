@@ -11,8 +11,10 @@ import BicycleGarage.DatabaseManager;
 public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
 	private DatabaseManager dbManager;
 
-	public RemoveUserMenuItem(DatabaseManager dbManager) {
+	public RemoveUserMenuItem(String menuText, DatabaseManager dbManager) {
+		super(menuText);
 		this.dbManager = dbManager;
+		addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -20,7 +22,5 @@ public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
 		String barcode = JOptionPane
 				.showInputDialog("WARNING - All bicycles associated with the user will also be removed!\nEnter user barcode: ");
 		//dbManager.removeUser(barcode);
-		
 	}
-
 }

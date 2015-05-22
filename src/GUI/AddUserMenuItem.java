@@ -16,6 +16,7 @@ public class AddUserMenuItem extends JMenuItem implements ActionListener {
 	public AddUserMenuItem(String menuText, DatabaseManager dbManager){
 		super(menuText);
 		this.dbManager = dbManager;
+		addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
