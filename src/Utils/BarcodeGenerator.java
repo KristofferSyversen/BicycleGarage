@@ -1,6 +1,6 @@
 package Utils;
 
-public class BarcodeGenerator { //TODO Check how many numbers need to be returned
+public class BarcodeGenerator {
 	private static int codeNbr = 0;
 	private static StringBuilder barcode;
 	
@@ -11,6 +11,9 @@ public class BarcodeGenerator { //TODO Check how many numbers need to be returne
 	 */
 	public static String getCode() {
 		
+		if(codeNbr>99999){
+			//ERROR
+		}
 		barcode = new StringBuilder();
 		barcode.append(codeNbr);
 		while(barcode.length() < 5){
