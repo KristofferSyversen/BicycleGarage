@@ -13,7 +13,8 @@ import Utils.BarcodeGenerator;
 public class AddUserMenuItem extends JMenuItem implements ActionListener {
 	private DatabaseManager dbManager;
 	
-	public AddUserMenuItem(DatabaseManager dbManager){
+	public AddUserMenuItem(String menuText, DatabaseManager dbManager){
+		super(menuText);
 		this.dbManager = dbManager;
 	}
 	

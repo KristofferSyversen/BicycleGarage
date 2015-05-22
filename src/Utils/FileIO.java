@@ -17,10 +17,10 @@ public class FileIO {
 		try{
 			Scanner scan = new Scanner(new File(filePath));
 			while(scan.hasNext()){
-				sb.append(scan.next() +'\n');
+				sb.append(scan.nextLine() +'\n');
 			}
 			scan.close();
-		} catch (FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		return sb.toString();
