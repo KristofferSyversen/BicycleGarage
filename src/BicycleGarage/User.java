@@ -47,4 +47,8 @@ public class User {
 	public boolean equals(User u){
 		return this.barcode.equals(u.barcode);
 	}
+	
+	public String toString() {
+		return name + " #bikes: " + bicycles.size();
+	}
 }
