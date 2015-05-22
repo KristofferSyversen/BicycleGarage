@@ -23,19 +23,39 @@ public class TerminalGUI {
 		while (!exit) {
 			printOptions();
 			int option = parseCommand();
-			
+
 			switch (option) {
-				case 1:		//TODO
-					
-				//...
-					
-				case 5: exit = true;
-						break;
+			case 1:
+				//addUser();
+				break;
+
+			case 2:
+				//addBicycle();
+				break;
+
+			case 3:
+				//printBarcode();
+				break;
+
+			case 4: 
+				//findOptions();
+				break;
+				
+			case 5:
+				//otherOptions();
+				break;
+				
+			case 6:
+				exit = true;
+				break;
+			
+			default:
+				System.out.println("Not a valid option!");
 			}
 		}
 	}
 
-	public int parseCommand() {
+	private int parseCommand() {
 		int choice = -1;
 		while (choice == -1) {
 			try {
@@ -60,7 +80,7 @@ public class TerminalGUI {
 		System.out.println(s);
 	}
 
-	private void printFindOptions(){
+	private void printFindOptions() {
 		String s = "";
 		s += "1. Find user\n";
 		s += "2. Find bicycle\n";
@@ -71,7 +91,7 @@ public class TerminalGUI {
 		s += "7. Back";
 		System.out.println(s);
 	}
-	
+
 	private void printOtherOptions() {
 		String s = "";
 		s += "1. Remove user\n";
