@@ -105,7 +105,7 @@ public class Database {
 		String field = "";
 		for(int i = 0; i < line.length(); i++){
 			char ch = line.charAt(i);
-			if(ch == '¤'){
+			if(ch == '%'){
 				break;
 			} else {
 				field += line.charAt(i);	// SPLIIT
@@ -119,10 +119,10 @@ public class Database {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < users.size(); i++){
 			User user = users.get(i);
-			sb.append(user.getName() + '¤' + user.getId() + '¤');
+			sb.append(user.getName() + '%' + user.getId() + '%');
 			ArrayList<Bicycle> userBicycles= user.getBicycles();
 			for(int j = 0; j < userBicycles.size(); j++){
-				sb.append(userBicycles.get(i).getBarcode() + '¤');
+				sb.append(userBicycles.get(i).getBarcode() + '%');
 			}
 		}
 		FileIO.writeToFile(userFile, sb.toString());
