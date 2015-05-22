@@ -43,4 +43,8 @@ public class User {
 	public ArrayList<Bicycle> getBicycles(){
 		return bicycles;
 	}
+	
+	public boolean equals(User u){
+		return this.barcode.equals(u.barcode);
+	}
 }

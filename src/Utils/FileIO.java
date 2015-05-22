@@ -17,7 +17,7 @@ public class FileIO {
 		try{
 			Scanner scan = new Scanner(new File(filePath));
 			while(scan.hasNext()){
-				sb.append(scan.next());
+				sb.append(scan.next() +'\n');
 			}
 			scan.close();
 		} catch (FileNotFoundException e){

@@ -22,4 +22,8 @@ public class BarcodeGenerator {
 		codeNbr++; //TODO Handle codeNbr growing larger than max
 		return barcode.toString();
 	}
+	
+	public static void setCodeNbr(int newNbr){
+		codeNbr = newNbr;
+	}
 }
