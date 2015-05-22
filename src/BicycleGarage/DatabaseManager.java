@@ -21,8 +21,8 @@ public class DatabaseManager {
 	public void removeUser(String b){
 		User user = database.getUser(b);
 		if(database.hasBicycleOrUser(b)){
-			for(Bicycle b: user.getBicycles()){
-				database.removeBicycle(b);
+			for(Bicycle bicycle: user.getBicycles()){
+				database.removeBicycle(bicycle);
 			}
 			database.removeUser(user);
 		} else {
