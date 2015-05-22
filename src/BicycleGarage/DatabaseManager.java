@@ -31,13 +31,12 @@ public class DatabaseManager {
 
 	}
 
-	public void addBicycle(User o, String b) throws Exception {
-		for (Bicycle bicycle : database.getBicycleList()) {
+	public void addBicycle(Bicycle bicycle) throws Exception {
+		for (Bicycle b : database.getBicycleList()) {
 			if (bicycle.getBarcode().equals(b)) {
 				throw new Exception("Bicycle barcode is already in use");
 			}
 		}
-		Bicycle bicycle = new Bicycle(o, b);
 		database.addBicycle(bicycle);
 	}
 
