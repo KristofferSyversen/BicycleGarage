@@ -16,4 +16,8 @@ public class Bicycle {
 	public String getBarcode(){
 		return barcode;
 	}
+	
+	public boolean equals(Bicycle b){
+		return this.barcode.equals(b.barcode);
+	}
 }
