@@ -8,17 +8,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 
 public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
-	private DatabaseManager ddm;
+	private Database database;
 	private JTextPane statusBar;
 	private DefaultListModel listModel;
 	private int choice;
 
-	public RemoveUserMenuItem(String menuText, DatabaseManager ddm) {
+	public RemoveUserMenuItem(String menuText, Database database) {
 		super(menuText);
-		this.ddm = ddm;
+		this.database = database;
 
 		addActionListener(this);
 	}
@@ -28,7 +28,7 @@ public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
 			String barcode = JOptionPane
 					.showInputDialog("Enter the barcode of the user to remove: ");
 			try {
-				ddm.removeUser(barcode);
+				database.removeUser(barcode);
 				JOptionPane.showMessageDialog(null, "User Removed.");
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getParent(),
