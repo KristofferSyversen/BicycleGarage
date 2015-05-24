@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 
 import BicycleGarage.Bicycle;
 import BicycleGarage.DatabaseManager;
@@ -15,11 +14,11 @@ import BicycleGarage.User;
 public class ChangeListContentMenuItem extends JMenuItem implements
 		ActionListener {
 	private DatabaseManager ddm;
-	private JTextPane statusBar;
+	private JLabel statusBar;
 	private DefaultListModel listModel;
 	private int content;
 
-	public ChangeListContentMenuItem(String menuText, DatabaseManager ddm, JTextPane statusBar, DefaultListModel listModel, int content) {
+	public ChangeListContentMenuItem(String menuText, DatabaseManager ddm, JLabel statusBar, DefaultListModel listModel, int content) {
 		super(menuText);
 		this.ddm = ddm;
 		this.statusBar = statusBar;

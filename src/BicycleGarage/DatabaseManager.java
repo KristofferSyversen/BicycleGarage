@@ -45,6 +45,8 @@ public class DatabaseManager {
 		}
 	}
 
+	
+	// TODO: something is wrong with the comparison here!!
 	public void checkOutBicycle(String b) throws Exception {
 		Bicycle bicycle = database.getBicycle(b);
 		if (database.isInGarage(bicycle)) {
@@ -54,6 +56,8 @@ public class DatabaseManager {
 		}
 	}
 
+	
+	// TODO: something is wrong with the comparison here!!
 	public void checkInBicycle(String b) throws Exception {
 		Bicycle bicycle = database.getBicycle(b);
 		if (!database.isInGarage(bicycle)) {

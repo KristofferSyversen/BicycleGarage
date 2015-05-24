@@ -4,8 +4,8 @@ public class Bicycle {
 	private User owner;
 	private String barcode;
 
-	public Bicycle(User o, String b) {
-		owner = o;
+	public Bicycle(/*User o,*/ String b) {
+		//owner = o;
 		barcode = b;
 	}
 	

@@ -97,7 +97,7 @@ public class Database {
 
 					while (line.length() > 0) {
 						String bicycleBarcode = parseField(line);
-						Bicycle bicycle = new Bicycle(user, bicycleBarcode);
+						Bicycle bicycle = new Bicycle(bicycleBarcode);
 						user.addBicycle(bicycle);
 						bicycles.add(bicycle);
 						line = line.substring(bicycleBarcode.length() + 1);
@@ -282,10 +282,14 @@ public class Database {
 		// Create bicycles
 		ArrayList<Bicycle> bicycles = new ArrayList<Bicycle>();
 		ArrayList<Bicycle> bicyclesInGarage = new ArrayList<Bicycle>();
-		Bicycle bmx = new Bicycle(user1, BarcodeGenerator.getCode());
-		Bicycle mc = new Bicycle(user2, BarcodeGenerator.getCode());
-		Bicycle hoj = new Bicycle(user3, BarcodeGenerator.getCode());
-		Bicycle old = new Bicycle(user3, BarcodeGenerator.getCode());
+		Bicycle bmx = new Bicycle(BarcodeGenerator.getCode());
+		Bicycle mc = new Bicycle(BarcodeGenerator.getCode());
+		Bicycle hoj = new Bicycle(BarcodeGenerator.getCode());
+		Bicycle old = new Bicycle(BarcodeGenerator.getCode());
+		user1.addBicycle(bmx);
+		user2.addBicycle(mc);
+		user3.addBicycle(hoj);
+		user3.addBicycle(old);
 		bicycles.add(old);
 		bicycles.add(hoj);
 		bicycles.add(mc);

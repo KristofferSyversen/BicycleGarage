@@ -10,13 +10,13 @@ import javax.swing.JTextPane;
 
 import BicycleGarage.DatabaseManager;
 
-public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
+public class RemoveBicycleMenuItem extends JMenuItem implements ActionListener {
 	private DatabaseManager ddm;
 	private JTextPane statusBar;
 	private DefaultListModel listModel;
 	private int choice;
 
-	public RemoveUserMenuItem(String menuText, DatabaseManager ddm) {
+	public RemoveBicycleMenuItem(String menuText, DatabaseManager ddm) {
 		super(menuText);
 		this.ddm = ddm;
 
@@ -26,10 +26,20 @@ public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 			String barcode = JOptionPane
-					.showInputDialog("Enter the barcode of the user to remove: ");
+					.showInputDialog("Enter the barcode of the bicycle to remove: ");
+			
 			try {
-				ddm.removeUser(barcode);
-				JOptionPane.showMessageDialog(null, "User Removed.");
+				ddm.checkOutBicycle(barcode);
+			} catch (Exception e) {
+				//Bicycle was not in garage.
+				JOptionPane.showMessageDialog(getParent(),
+						"Fail: " + e.getMessage());
+			}
+			
+			
+			try {
+				ddm.removeBicycle(barcode);
+				JOptionPane.showMessageDialog(null, "Bicycle Removed.");
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getParent(),
 						"Fail: " + e.getMessage());
