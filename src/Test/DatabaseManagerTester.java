@@ -22,7 +22,7 @@ public class DatabaseManagerTester {
 	
 	@Before
 	public void setup() {
-		database = Database.databaseSetup();
+		database = Database.getGenericDatabase();
 		dbManager = new DatabaseManager(database);
 		users = database.getUserList();
 		bicycles = database.getBicycleList();

@@ -8,47 +8,47 @@ public class User {
 	private String barcode;
 	private ArrayList<Bicycle> bicycles;
 
-	public User(String n, int i, String b){
+	public User(String n, int i, String b) {
 		name = n;
 		id = i;
 		barcode = b;
 		bicycles = new ArrayList<Bicycle>();
 	}
-	
-	public void addBicycle(Bicycle b){
+
+	public void addBicycle(Bicycle b) {
 		bicycles.add(b);
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return id;
 	}
-	
-	public String getBarcode(){
+
+	public String getBarcode() {
 		return barcode;
 	}
-	
+
 	public boolean ownsBicycle(Bicycle bicycle) {
-		for(Bicycle b: bicycles){
-			if(b.equals(bicycle)){
+		for (Bicycle b : bicycles) {
+			if (b.equals(bicycle)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public ArrayList<Bicycle> getBicycles(){
+
+	public ArrayList<Bicycle> getBicycles() {
 		return bicycles;
 	}
-	
-	public boolean equals(User u){
-		return this.barcode.equals(u.barcode);
+
+	public boolean equals(User u) {
+		return this.id == id;
 	}
-	
+
 	public String toString() {
-		return name + " #bikes: " + bicycles.size();
+		return name + " id: " + id + " barcode number: " + barcode + " #bikes: " + bicycles.size() ;
 	}
 }

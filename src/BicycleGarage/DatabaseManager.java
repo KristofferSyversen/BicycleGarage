@@ -9,21 +9,15 @@ public class DatabaseManager {
 		this.database = database;
 	}
 	
-	public void addUser(User user) {
-		
-		//TODO: change this, commented it out to test other things!!!
-		
-//		for (User u : database.getUserList()) {
-//			if (u.equals(user)) {
-//				throw new Exception("User barcode is already in use");
-//			}
-//		}
-		database.addUser(user);
+	public void addUser(User user) throws Exception{		
+		if(!database.addUser(user)){
+			throw new Exception("User id is already in use!");
+		}
 	}
 
-	public void removeUser(String b) throws Exception {
-		User user = database.getUser(b);
-		if (database.userExists(b)) {
+	public void removeUser(String barcode) throws Exception {
+		User user = database.getUser(barcode);
+		if (database.userExists(barcode)) {
 			for (Bicycle bicycle : user.getBicycles()) {
 				database.removeBicycle(bicycle);
 			}
@@ -77,13 +71,8 @@ public class DatabaseManager {
 		return database.getBicycleList();
 	}
 
-	public User getUser(String b){
-		for(User user: getUserList()){
-			if(user.getBarcode().equals(b)){
-				return user;
-			}
-		}
-		return null;
+	public User getUser(String barcode){
+		return database.getUser(barcode);
 	}
 
 	public ArrayList<Bicycle> getBicycleInGarageList() {

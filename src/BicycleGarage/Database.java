@@ -8,7 +8,7 @@ import Utils.FileIO;
 /**
  * 
  * @author kristoffer
- *
+ * 
  */
 public class Database {
 	/*
@@ -48,11 +48,11 @@ public class Database {
 		users = new ArrayList<User>();
 		bicycles = new ArrayList<Bicycle>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
-		
+
 		try {
 			parseData(FileIO.readFromFile(userFile));
-		} catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -69,32 +69,33 @@ public class Database {
 	 * removeBicycle(Bicycle) + checkOutBicycle(Bicycle) +
 	 * checkInBicycle(Bicycle) + getUserList() + getBikeList()
 	 */
-	
-	private void parseData(String data){
-		if(data.length() != 0){
+
+	private void parseData(String data) {
+		if (data.length() != 0) {
 			String[] dataParts = data.split("%%%%%");
 			String[] lines = dataParts[0].split("\n");
-			
-			for(int i = 0; i < lines.length; i++){
+
+			for (int i = 0; i < lines.length; i++) {
 				int id = -1;
 				String line = lines[i];
 				String userName = parseField(line);
 				line = line.substring(userName.length() + 1);
-				try{
-					id = Integer.parseInt(parseField(line)); // throws NumberFormatException
+				try {
+					id = Integer.parseInt(parseField(line)); // throws
+																// NumberFormatException
 					line = line.substring(String.valueOf(id).length() + 1);
-				} catch (NumberFormatException e){
+				} catch (NumberFormatException e) {
 					// Ignore incomplete user
 				}
-				
+
 				String userBarcode = parseField(line);
 				line = line.substring(userBarcode.length() + 1);
-					
-				if(!userName.isEmpty() && !userBarcode.isEmpty() && id != -1){
-					User user = new User(userName,id, userBarcode);
+
+				if (!userName.isEmpty() && !userBarcode.isEmpty() && id != -1) {
+					User user = new User(userName, id, userBarcode);
 					users.add(user);
-						
-					while(line.length() > 0){
+
+					while (line.length() > 0) {
 						String bicycleBarcode = parseField(line);
 						Bicycle bicycle = new Bicycle(user, bicycleBarcode);
 						user.addBicycle(bicycle);
@@ -104,46 +105,47 @@ public class Database {
 				}
 			}
 			lines = dataParts[1].split("\n");
-			for(int i = 0; i < lines.length; i++){
+			for (int i = 0; i < lines.length; i++) {
 				String line = lines[i];
-				if(line.length() > 0){
+				if (line.length() > 0) {
 					Bicycle bicycle = getBicycle(line);
-					if(bicycle != null) bicyclesInGarage.add(bicycle);
+					if (bicycle != null)
+						bicyclesInGarage.add(bicycle);
 				}
 			}
 		}
 	}
-	
-	private String parseField(String line){
+
+	private String parseField(String line) {
 		String field = "";
-		for(int i = 0; i < line.length(); i++){
+		for (int i = 0; i < line.length(); i++) {
 			char ch = line.charAt(i);
-			if(ch == '%'){
+			if (ch == '%') {
 				break;
 			} else {
-				field += line.charAt(i);	// SPLIIT
-			}			
+				field += line.charAt(i); // SPLIIT
+			}
 		}
 		return field;
 	}
-	
-	public boolean writeToFile(String userFile, String bicycleFile){
+
+	public boolean writeToFile(String userFile, String bicycleFile) {
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < users.size(); i++){
+		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
 			sb.append(user.getName() + '%' + user.getId() + '%');
-			ArrayList<Bicycle> userBicycles= user.getBicycles();
-			for(int j = 0; j < userBicycles.size(); j++){
+			ArrayList<Bicycle> userBicycles = user.getBicycles();
+			for (int j = 0; j < userBicycles.size(); j++) {
 				sb.append(userBicycles.get(i).getBarcode() + '%');
 			}
 		}
 		sb.append("%%%%%" + '\n');
-		for(int i = 0; i < bicyclesInGarage.size(); i++){
+		for (int i = 0; i < bicyclesInGarage.size(); i++) {
 			sb.append(bicyclesInGarage.get(i).getBarcode() + '\n');
 		}
 		return FileIO.writeToFile(userFile, sb.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param user
@@ -157,7 +159,11 @@ public class Database {
 	}
 
 	public boolean removeUser(User user) {
-		return users.remove(user);
+		boolean wasRemoved = users.remove(user);
+		if (wasRemoved) {
+			BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
+		}
+		return wasRemoved;
 	}
 
 	/**
@@ -165,15 +171,22 @@ public class Database {
 	 * @param bicycle
 	 */
 	public boolean addBicycle(Bicycle bicycle) {
-		if (!bicycles.contains(bicycle)) {
+		if (users.contains(bicycle.getOwner())) {
 			bicycles.add(bicycle);
 			return true;
+		}
+		if (!bicycles.contains(bicycle)) {
+			BarcodeGenerator.setBarcodeAsAvailable(bicycle.getBarcode());
 		}
 		return false;
 	}
 
 	public boolean removeBicycle(Bicycle bicycle) {
-		return bicycles.remove(bicycle);
+		boolean wasRemoved = bicycles.remove(bicycle);
+		if (wasRemoved) {
+			BarcodeGenerator.setBarcodeAsAvailable(bicycle.getBarcode());
+		}
+		return wasRemoved;
 	}
 
 	/**
@@ -181,7 +194,7 @@ public class Database {
 	 * @param bicycle
 	 */
 	public boolean checkInBicycle(Bicycle bicycle) {
-		if (!bicyclesInGarage.contains(bicycle)) {
+		if (!bicyclesInGarage.contains(bicycle) && bicycles.contains(bicycle)) {
 			bicyclesInGarage.add(bicycle);
 			return true;
 		}
@@ -190,14 +203,6 @@ public class Database {
 
 	public boolean checkOutBicycle(Bicycle bicycle) {
 		return bicyclesInGarage.remove(bicycle);
-	}
-
-	/**
-	 * Generates a unique barcode.
-	 */
-	public String generateBarcode() {
-		// TODO handle static variable overflow in BarcodeGenerator
-		return BarcodeGenerator.getCode();
 	}
 
 	public boolean userExists(String barcode) {
@@ -260,12 +265,12 @@ public class Database {
 	public ArrayList<Bicycle> getBicycleList() {
 		return bicycles;
 	}
-	
+
 	public ArrayList<Bicycle> getBicyclesInGarageList() {
 		return bicyclesInGarage;
 	}
 
-	public static Database databaseSetup() {
+	public static Database getGenericDatabase() {
 		// Create users
 		ArrayList<User> users = new ArrayList<User>();
 		User user1 = new User("Ada", 1, BarcodeGenerator.getCode());
@@ -287,7 +292,7 @@ public class Database {
 		bicycles.add(bmx);
 		bicyclesInGarage.add(old);
 		bicyclesInGarage.add(bmx);
-		
+
 		user1.addBicycle(bmx);
 		user1.addBicycle(mc);
 		user2.addBicycle(old);

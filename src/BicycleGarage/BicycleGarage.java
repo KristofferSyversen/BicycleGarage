@@ -48,7 +48,7 @@ public class BicycleGarage {
 
 		
 		//TODO: CHANGE THIS TO THE PARSED INPUT< THIS IS ONLY FOR TESTING.
-		database = Database.databaseSetup(); //new Database(databaseFile);
+		database = Database.getGenericDatabase(); //new Database(databaseFile);
 
 		dbm = new DatabaseManager(database);
 
@@ -87,7 +87,7 @@ public class BicycleGarage {
 	}
 
 	public static void main(String[] args) {
-		BicycleGarage bg = new BicycleGarage();
+		BicycleGarage bg = new 		BicycleGarage();
 
 		bg.startOperatorGUI();
 		bg.exit();
