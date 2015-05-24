@@ -247,6 +247,46 @@ public class Database {
 	public ArrayList<Bicycle> getBicyclesInGarageList() {
 		return bicyclesInGarage;
 	}
+	
+	public boolean hasBicycleOrUser(String barcode){
+		try{
+			getUser(barcode);
+		} catch (IllegalArgumentException e){
+			try{
+				getBicycle(barcode);
+			} catch(IllegalArgumentException e2){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean bicycleExists(String barcode){
+		try{
+			getBicycle(barcode);
+		} catch (IllegalArgumentException e){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean userExists(String barcode){
+		try{
+			getUser(barcode);
+		} catch (IllegalArgumentException e){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean isInGarage(String barcode){
+		for(Bicycle b: bicyclesInGarage){
+			if(b.getBarcode().equals(barcode)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static Database getGenericDatabase() {
 		// Create users

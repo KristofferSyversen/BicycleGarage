@@ -65,22 +65,20 @@ public class BicycleGarageManager {
 		// methods + open doors + blink LEDs.
 
 		logger.log("EntryScanner scanned : " + barcode + ".");
-
+		
 		if (database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2
-			
-			
-			Bicycle bicycle = database.getBicycle(barcode);
-			if(bicycle != null) {
+			try{
+				database.checkInBicycle(barcode);
 				logger.log("Checking in bicycle: " + barcode);
-				database.checkInBicycle(bicycle);
-			}	
+			} catch (IllegalArgumentException e){
+				//Bicycle already registered to be in garage or barcode is a user
+				//do nothing
+			}
 			logger.log("Unlocking entry door lock for registered barcode: " + barcode + ".");
 			entryLock.open(Constants.UNLOCK_TIME);
-			
 		} else {
-			// Barcode not registered to either a bicycle or a user.
 			logger.log("Unknown barcode scanned @ entry: " + barcode + ".");
-			pinCodeTerminal.lightLED(PinCodeTerminal.RED_LED,Constants.RED_LED_TIME); // Light RED_LED for 3 seconds according to spec.
+			pinCodeTerminal.lightLED(PinCodeTerminal.RED_LED,Constants.RED_LED_TIME); 
 		}
 	}
 	private Bicycle findBicycle(String barcode1, String barcode2){
@@ -133,11 +131,11 @@ public class BicycleGarageManager {
 				}
 				
 				if(user.ownsBicycle(bicycle)) {
-					if(database.isInGarage(bicycle)) {
+					if(database.isInGarage(bicycle.getBarcode())) {
 						logger.log("Checking out bicycle.");
 						
 						exitLock.open(Constants.UNLOCK_TIME);
-						database.checkOutBicycle(bicycle);
+						database.checkOutBicycle(bicycle.getBarcode());
 					} else {
 						logger.log("Bicycle not checked in.");
 					}
