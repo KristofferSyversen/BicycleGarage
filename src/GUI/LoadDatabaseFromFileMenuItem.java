@@ -6,17 +6,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 import BicycleGarage.User;
 import Utils.BarcodeGenerator;
 
 public class LoadDatabaseFromFileMenuItem extends JMenuItem implements
 		ActionListener {
-	private DatabaseManager dbManager;
+	private Database database;
 
-	public LoadDatabaseFromFileMenuItem(String menuText, DatabaseManager dbManager) {
+	public LoadDatabaseFromFileMenuItem(String menuText, Database dbManager) {
 		super(menuText);
-		this.dbManager = dbManager;
+		this.database = dbManager;
 		addActionListener(this);
 	}
 
