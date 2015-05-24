@@ -76,6 +76,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		database.addBicycle(bicycle);
+		user.addBicycle(bicycle);
 		
 		assertTrue("Expected 5 but was " + bicycles.size(), bicycles.size() == 5 );
 	}
@@ -86,6 +87,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		database.addBicycle(bicycle);
+		user.addBicycle(bicycle);
 		
 		database.removeBicycle(bicycle);
 		assertTrue("Expected 4 but was " + bicycles.size(), bicycles.size() == 4 );
@@ -97,6 +99,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		database.addBicycle(bicycle);
+		user.addBicycle(bicycle);
 		
 		database.checkInBicycle(bicycle);
 		assertTrue("Expected true but was " + database.isInGarage(bicycle), database.isInGarage(bicycle));
@@ -108,6 +111,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		database.addBicycle(bicycle);
+		user.addBicycle(bicycle);
 		
 		database.checkInBicycle(bicycle);
 		database.checkOutBicycle(bicycle);
@@ -142,6 +146,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		database.addBicycle(bicycle);
+		user.addBicycle(bicycle);
 		
 		assertTrue("Expected true but was " + database.userExists(b),  database.userExists(b));
 		
