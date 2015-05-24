@@ -1,6 +1,6 @@
 package Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -22,43 +22,16 @@ public class DatabaseTester {
 	
 	@Before
 	public void setup(){
-		//Create users
-		users = new ArrayList<User>();
-		User user1 = new User("Ada", 1, BarcodeGenerator.getCode());
-		User user2 = new User("Bob", 2, BarcodeGenerator.getCode());
-		User user3 = new User("Eve", 3, BarcodeGenerator.getCode());
-		users.add(user1);
-		users.add(user2);
-		users.add(user3);
-		//Create bicycles
-		bicycles = new ArrayList<Bicycle>();
-		ArrayList<Bicycle> bicyclesInGarage = new ArrayList<Bicycle>();
-		Bicycle bmx = new Bicycle(BarcodeGenerator.getCode());
-		Bicycle mc = new Bicycle(BarcodeGenerator.getCode());
-		Bicycle hoj = new Bicycle(BarcodeGenerator.getCode());
-		Bicycle old = new Bicycle(BarcodeGenerator.getCode());
-		user1.addBicycle(bmx);
-		user2.addBicycle(mc);
-		user3.addBicycle(hoj);
-		user3.addBicycle(old);
-		bicycles.add(old);
-		bicycles.add(hoj);
-		bicycles.add(mc);
-		bicycles.add(bmx);
-		bicyclesInGarage.add(old);
-		bicyclesInGarage.add(bmx);
-		
 		emptyDatabase = new Database();
-		database = new Database(users, bicycles, bicyclesInGarage);
-		
-		
+		database = Database.getGenericDatabase();
 	}
 	
 	@Test
 	public void testAddUser(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		
+		database.getUser(user.getBarcode());
+		users = database.getUserList();
 		assertTrue("Expected 4 but was " + users.size(), users.size() == 4 );
 	}
 	
@@ -66,8 +39,13 @@ public class DatabaseTester {
 	public void testRemoveUser(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		
 		database.removeUser(user.getBarcode());
+		try{
+			database.getUser(user.getBarcode());
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
+		users = database.getUserList();
 		assertTrue("Expected 3 but was " + users.size(), users.size() == 3 );
 	}
 	
@@ -75,10 +53,10 @@ public class DatabaseTester {
 	public void testAddBicycle(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(bicycle);
-		user.addBicycle(bicycle);
-		
+		database.addBicycle(user.getBarcode());
+		ArrayList<Bicycle> userBikes = database.getUser(user.getBarcode()).getBicycles();
+		assertTrue(userBikes.size() > 0);
+		bicycles = database.getBicycleList();
 		assertTrue("Expected 5 but was " + bicycles.size(), bicycles.size() == 5 );
 	}
 	
@@ -86,9 +64,9 @@ public class DatabaseTester {
 	public void testRemoveBicycle(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(user.getBarcode());
+		Bicycle bicycle = database.addBicycle(user.getBarcode());
 		database.removeBicycle(bicycle.getBarcode());
+		bicycles = database.getBicycleList();
 		assertTrue("Expected 4 but was " + bicycles.size(), bicycles.size() == 4 );
 	}
 	
@@ -96,25 +74,20 @@ public class DatabaseTester {
 	public void testCheckInBicycle(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(bicycle);
-		user.addBicycle(bicycle);
-		
-		database.checkInBicycle(bicycle);
-		assertTrue("Expected true but was " + database.isInGarage(bicycle), database.isInGarage(bicycle));
+		Bicycle bike = database.addBicycle(user.getBarcode());
+		database.checkInBicycle(bike.getBarcode());
+		assertTrue("Expected true but was " + database.isInGarage(bike.getBarcode()), database.isInGarage(bike.getBarcode()));
 	}
 	
 	@Test
 	public void testCheckOutBicycle(){
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
-		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(bicycle);
-		user.addBicycle(bicycle);
+		Bicycle bicycle = database.addBicycle(user.getBarcode());
 		
-		database.checkInBicycle(bicycle);
-		database.checkOutBicycle(bicycle);
-		assertTrue("Expected false but was " + database.isInGarage(bicycle), !database.isInGarage(bicycle));
+		database.checkInBicycle(bicycle.getBarcode());
+		database.checkOutBicycle(bicycle.getBarcode());
+		assertTrue("Expected false but was " + database.isInGarage(bicycle.getBarcode()), !database.isInGarage(bicycle.getBarcode()));
 	}
 	
 	@Test
@@ -125,7 +98,7 @@ public class DatabaseTester {
 		database.addUser(user);
 		assertTrue("Expected true but was " + database.userExists(b),  database.userExists(b));
 		
-		database.removeUser(user);
+		database.removeUser(user.getBarcode());
 		assertTrue("Expected false but was " + database.userExists(b),  !database.userExists(b));
 	}
 	
@@ -143,13 +116,11 @@ public class DatabaseTester {
 		String b = BarcodeGenerator.getCode();
 		User user = new User("Charlie", 4, b);
 		database.addUser(user);
-		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(bicycle);
-		user.addBicycle(bicycle);
+		Bicycle bicycle = database.addBicycle(b);
 		
 		assertTrue("Expected true but was " + database.userExists(b),  database.userExists(b));
 		
-		database.removeUser(user);
+		database.removeUser(b);
 		assertTrue("Expected false but was " + database.userExists(b),  !database.userExists(b));
 	}
 }

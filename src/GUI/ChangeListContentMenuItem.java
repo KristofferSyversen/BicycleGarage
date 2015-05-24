@@ -18,28 +18,29 @@ public class ChangeListContentMenuItem extends JMenuItem implements
 	private DefaultListModel listModel;
 	private int content;
 
-	public ChangeListContentMenuItem(String menuText, Database database, JLabel statusBar, DefaultListModel listModel, int content) {
+	public ChangeListContentMenuItem(String menuText, Database database,
+			JLabel statusBar, DefaultListModel listModel, int content) {
 		super(menuText);
 		this.database = database;
 		this.statusBar = statusBar;
 		this.listModel = listModel;
 		this.content = content;
-		
+
 		addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		if(content == 0) {
+		if (content == 0) {
 			populateListWithUsers();
 		}
-		if(content == 1) {
+		if (content == 1) {
 			populateListWithBicycles();
 		}
-		if(content == 2) {
+		if (content == 2) {
 			populateListWithBicyclesInGarage();
 		}
 	}
-	
+
 	private void populateListWithUsers() {
 		statusBar.setText("Registered users.");
 		listModel.clear();
@@ -51,8 +52,9 @@ public class ChangeListContentMenuItem extends JMenuItem implements
 	private void populateListWithBicycles() {
 		statusBar.setText("Registered bicycles.");
 		listModel.clear();
-		for (Bicycle bicycle : database.getBicycleList()) {
-			listModel.addElement(bicycle.toString());
+		for (User user : database.getUserList()) {
+			listModel.addElement(user.getName() + ": "
+					+ user.getBicycles().toString());
 		}
 	}
 

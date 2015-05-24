@@ -48,10 +48,12 @@ public class User implements Comparable{
 		return bicycles.remove(b);
 	}
 	
+	//Not consistent with compareTo method
 	public boolean equals(User u) {
 		return this.barcode.equals(u.getBarcode());
 	}
 	
+	//Not consistent with equals method
 	public int compareTo(Object user){
 		if(user instanceof User){
 			User u = (User) user;

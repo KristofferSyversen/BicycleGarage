@@ -168,9 +168,11 @@ public class Database {
 		BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
 	}
 
-	public void addBicycle(String userBarcode){
+	public Bicycle addBicycle(String userBarcode){
 		User user = getUser(userBarcode);
-		user.addBicycle(new Bicycle(BarcodeGenerator.getCode()));
+		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
+		user.addBicycle(bicycle);
+		return bicycle;
 	}
 	
 	public void removeBicycle(String barcode) {
