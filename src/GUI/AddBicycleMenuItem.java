@@ -41,6 +41,7 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 					e.printStackTrace();
 				}
 			}
+			//Error message?
 		}
 	}
 }

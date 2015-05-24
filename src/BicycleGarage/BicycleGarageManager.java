@@ -94,7 +94,7 @@ public class BicycleGarageManager {
 	private User findUser(String barcode1, String barcode2){
 		if(database.userExists(barcode1)) {
 			return database.getUser(barcode1);
-		} else if(database.bicycleExists(barcode2)) {
+		} else if(database.userExists(barcode2)) {
 			return database.getUser(barcode2);
 		} else {
 			return null;
@@ -115,7 +115,7 @@ public class BicycleGarageManager {
 		
 		logger.log("ExitScanner scanned : " + barcode + ".");
 		
-		if (/*remove"!"*/!database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
+		if (/*remove"!"*/database.hasBicycleOrUser(barcode)) { // Use case 5.1.1/5.1.2 // Remove ! to fix logic.
 			if(firstBarcodeScanned) { // The first barcode is already scanned and stored.
 				logger.log("Second barcode scanned: " + barcode);
 				
@@ -127,10 +127,8 @@ public class BicycleGarageManager {
 				
 				if(bicycle == null||user == null){
 					logger.log("Barcode for user and/or bicycle missing");
-					return;
 				}
-				
-				if(user.ownsBicycle(bicycle)) {
+				else if(user.ownsBicycle(bicycle)) {
 					if(database.isInGarage(bicycle.getBarcode())) {
 						logger.log("Checking out bicycle.");
 						
@@ -145,14 +143,14 @@ public class BicycleGarageManager {
 				}
 				firstBarcodeScanned = false;
 				firstBarcode = "empty";
-				timer.purge();
+				timer.cancel();
 				
 			} else { // First time a barcode is scanned, use this branch to set a timer and store the barcode.
 				
 				firstBarcode = barcode;
 				firstBarcodeScanned = true;
 				
-				logger.log("Barcode timer started, reseting in " + Constants.TIME_BETWEEN_BARCODES + " seconds.");
+				logger.log("Barcode timer started, resetting in " + Constants.TIME_BETWEEN_BARCODES + " seconds.");
 				
 				timer.schedule(new TimerTask() {
 					  @Override
