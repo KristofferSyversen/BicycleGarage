@@ -22,7 +22,6 @@ public class Database {
 	 * references to bikes in the bicycles list.
 	 */
 	private ArrayList<User> users; // Or some other container class.
-	private ArrayList<Bicycle> bicycles; //
 	private ArrayList<Bicycle> bicyclesInGarage;
 
 	/**
@@ -35,7 +34,6 @@ public class Database {
 	public Database(ArrayList<User> users, ArrayList<Bicycle> bicycles,
 			ArrayList<Bicycle> bicyclesInGarage) {
 		this.users = users;
-		this.bicycles = bicycles;
 		this.bicyclesInGarage = bicyclesInGarage;
 	}
 
@@ -46,7 +44,6 @@ public class Database {
 	public Database(String userFile) {
 		// Parse the user file and place the user data where it belongs.
 		users = new ArrayList<User>();
-		bicycles = new ArrayList<Bicycle>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
 
 		try {
@@ -58,7 +55,6 @@ public class Database {
 
 	public Database() {
 		users = new ArrayList<User>();
-		bicycles = new ArrayList<Bicycle>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
 	}
 
@@ -99,7 +95,6 @@ public class Database {
 						String bicycleBarcode = parseField(line);
 						Bicycle bicycle = new Bicycle(bicycleBarcode);
 						user.addBicycle(bicycle);
-						bicycles.add(bicycle);
 						line = line.substring(bicycleBarcode.length() + 1);
 					}
 				}
@@ -150,68 +145,60 @@ public class Database {
 	 * 
 	 * @param user
 	 */
-	public boolean addUser(User user) {
+	public void addUser(User user) {
 		if (!users.contains(user)) {
 			users.add(user);
-			return true;
+		} else {
+			throw new IllegalArgumentException("Barcode already exists!");
 		}
-		return false;
 	}
 
-	public boolean removeUser(User user) {
-		boolean wasRemoved = users.remove(user);
-		if (wasRemoved) {
-			BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
-		}
-		return wasRemoved;
-	}
-
-	/**
-	 * 
-	 * @param bicycle
-	 */
-	public boolean addBicycle(Bicycle bicycle) {
-		if (users.contains(bicycle.getOwner())) {
-			bicycles.add(bicycle);
-			return true;
-		}
-		if (!bicycles.contains(bicycle)) {
-			BarcodeGenerator.setBarcodeAsAvailable(bicycle.getBarcode());
-		}
-		return false;
-	}
-
-	public boolean removeBicycle(Bicycle bicycle) {
-		boolean wasRemoved = bicycles.remove(bicycle);
-		if (wasRemoved) {
-			BarcodeGenerator.setBarcodeAsAvailable(bicycle.getBarcode());
-		}
-		return wasRemoved;
-	}
-
-	/**
-	 * 
-	 * @param bicycle
-	 */
-	public boolean checkInBicycle(Bicycle bicycle) {
-		if (!bicyclesInGarage.contains(bicycle) && bicycles.contains(bicycle)) {
-			bicyclesInGarage.add(bicycle);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean checkOutBicycle(Bicycle bicycle) {
-		return bicyclesInGarage.remove(bicycle);
-	}
-
-	public boolean userExists(String barcode) {
-		for (User u : users) {
-			if (u.getBarcode().equals(barcode)) {
-				return true;
+	public void removeUser(String barcode) {
+		User user = getUser(barcode);
+		for (Bicycle b : user.getBicycles()) {
+			if (bicyclesInGarage.contains(b)) {
+				throw new IllegalArgumentException("User has bicycles in garage, remove these first!");
 			}
 		}
-		return false;
+		for(Bicycle b: user.getBicycles()){
+			BarcodeGenerator.setBarcodeAsAvailable(b.getBarcode());
+		}
+		users.remove(user);
+		BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
+	}
+
+	public void addBicycle(String userBarcode){
+		User user = getUser(userBarcode);
+		user.addBicycle(new Bicycle(BarcodeGenerator.getCode()));
+	}
+	
+	public void removeBicycle(String barcode) {
+		Bicycle removeBike = getBicycle(barcode);
+		if (bicyclesInGarage.contains(removeBike)) {
+			throw new IllegalArgumentException(
+					"Bicycle can't be removed since it is currently in the garage!");
+		}
+		BarcodeGenerator.setBarcodeAsAvailable(barcode);
+		for (User u : users) {
+			if (u.removeBicycle(removeBike)) {
+				break;
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param bicycle
+	 */
+	public void checkInBicycle(String barcode) {
+		Bicycle bicycle = getBicycle(barcode);
+		if (!bicyclesInGarage.contains(bicycle)) {
+			bicyclesInGarage.add(bicycle);
+			return;
+		} else {
+			throw new IllegalArgumentException("Bicycle is already in garage!");
+		}
 	}
 
 	public User getUser(String barcode) {
@@ -220,52 +207,43 @@ public class Database {
 				return u;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("No such user exists!");
 	}
 
-	public boolean hasBicycleOrUser(String barcode) {
-		if (userExists(barcode) || bicycleExists(barcode)) {
-			return true;
+	public void checkOutBicycle(String barcode) {
+		Bicycle bicycle = getBicycle(barcode);
+		if(bicyclesInGarage.contains(bicycle)){
+			bicyclesInGarage.remove(bicycle);
+		} else {
+			throw new IllegalArgumentException("Bicycle isn't currently in garage!");
 		}
-		return false;
-	}
-
-	public boolean bicycleExists(String barcode) {
-		for (Bicycle b : bicycles) {
-			if (b.getBarcode().equals(barcode)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public Bicycle getBicycle(String barcode) {
-		for (Bicycle b : bicycles) {
-			if (b.getBarcode().equals(barcode)) {
-				return b;
+		for (User u : users) {
+			for (Bicycle b : u.getBicycles()) {
+				if (b.getBarcode().equals(barcode)) {
+					return b;
+				}
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("No such bicycle exists!");
 	}
 
-	public boolean isInGarage(Bicycle bicycle) { // TODO rewrite argument as
-													// String
-		for (Bicycle b : bicycles) {
-			if (b.getBarcode().equals(bicycle)) {
-				return true;
-			}
-		}
-		return false;
-	}
+
 
 	public ArrayList<User> getUserList() {
 		return users;
 	}
 
-	public ArrayList<Bicycle> getBicycleList() {
+	public ArrayList<Bicycle> getBicycleList(){
+		ArrayList<Bicycle> bicycles = new ArrayList<Bicycle>();
+		for(User u: users){
+			bicycles.addAll(u.getBicycles());
+		}
 		return bicycles;
 	}
-
+	
 	public ArrayList<Bicycle> getBicyclesInGarageList() {
 		return bicyclesInGarage;
 	}

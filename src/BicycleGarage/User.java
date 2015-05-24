@@ -44,8 +44,12 @@ public class User {
 		return bicycles;
 	}
 
+	public boolean removeBicycle(Bicycle b){
+		return bicycles.remove(b);
+	}
+	
 	public boolean equals(User u) {
-		return this.id == id;
+		return this.barcode.equals(u.getBarcode());
 	}
 
 	public String toString() {
