@@ -6,11 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import BicycleGarage.Bicycle;
 import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.Database;
-import BicycleGarage.User;
-import Utils.BarcodeGenerator;
 
 public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 	private Database database;

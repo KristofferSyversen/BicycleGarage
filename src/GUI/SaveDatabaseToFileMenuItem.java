@@ -4,11 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 import BicycleGarage.Database;
-import BicycleGarage.User;
-import Utils.BarcodeGenerator;
 
 public class SaveDatabaseToFileMenuItem extends JMenuItem implements
 		ActionListener {

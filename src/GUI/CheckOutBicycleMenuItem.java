@@ -7,8 +7,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import BicycleGarage.Database;
-import BicycleGarage.User;
-import Utils.BarcodeGenerator;
 
 public class CheckOutBicycleMenuItem extends JMenuItem implements
 		ActionListener {
