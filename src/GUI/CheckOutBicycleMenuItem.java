@@ -6,24 +6,24 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 import BicycleGarage.User;
 import Utils.BarcodeGenerator;
 
 public class CheckOutBicycleMenuItem extends JMenuItem implements
 		ActionListener {
-	private DatabaseManager dbManager;
+	private Database database;
 
-	public CheckOutBicycleMenuItem(String menuText, DatabaseManager dbManager) {
+	public CheckOutBicycleMenuItem(String menuText, Database database) {
 		super(menuText);
-		this.dbManager = dbManager;
+		this.database = database;
 		addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
 		String barcode = JOptionPane.showInputDialog("Enter bicycle barcode:");
 		try {
-			dbManager.checkOutBicycle(barcode);
+			database.checkOutBicycle(barcode);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(getParent(),
 					"Fail: " + e.getMessage());
