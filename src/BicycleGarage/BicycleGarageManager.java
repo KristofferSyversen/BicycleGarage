@@ -46,6 +46,14 @@ public class BicycleGarageManager {
 		this.exitLock = exitLock;
 		this.pinCodeTerminal = terminal;
 	}
+	
+	/**
+	 * 
+	 * @param barcode
+	 */
+	public void printBarcode(String barcode) {
+		barcodePrinter.printBarcode(barcode);
+	}
 
 	/**
 	 * Will be called when a user has used the bar code reader at the entry
