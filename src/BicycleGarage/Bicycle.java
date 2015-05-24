@@ -22,6 +22,6 @@ public class Bicycle {
 	}
 	
 	public String toString() {
-		return "Bicycle #" + barcode + " Owner: " + owner.getName();
+		return "Bicycle #" + barcode;
 	}
 }
