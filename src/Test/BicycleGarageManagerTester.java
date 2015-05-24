@@ -50,6 +50,15 @@ public class BicycleGarageManagerTester {
 	}
 	@Test
 	public void testPrintBarcode() {
+		//Hur ska vi testa detta utan en get-metod i testdrivern?
 	}
-
+	@Test
+	public void test2() {
+	}
+	@Test
+	public void test3() {
+	}
+	@Test
+	public void test4() {
+	}
 }
