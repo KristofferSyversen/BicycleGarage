@@ -8,18 +8,18 @@ import javax.swing.JOptionPane;
 
 import BicycleGarage.Bicycle;
 import BicycleGarage.BicycleGarageManager;
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 import BicycleGarage.User;
 import Utils.BarcodeGenerator;
 
 public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
-	private DatabaseManager dbManager;
+	private Database database;
 	private BicycleGarageManager bgm;
 
-	public AddBicycleMenuItem(String menuText, DatabaseManager dbManager,
+	public AddBicycleMenuItem(String menuText, Database database,
 			BicycleGarageManager bgm) {
 		super(menuText);
-		this.dbManager = dbManager;
+		this.database = database;
 		this.bgm = bgm;
 		addActionListener(this);
 	}
@@ -28,14 +28,14 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 		String userBarcode = JOptionPane.showInputDialog("To whoom do you which to register the bike?:");
 		if (userBarcode != null) {
 
-			User user = dbManager.getUser(userBarcode);
+			User user = database.getUser(userBarcode);
 			if(user != null) {
 				String barcode = BarcodeGenerator.getCode();
 				Bicycle bicycle = new Bicycle(barcode);
 				user.addBicycle(bicycle);
 				
 				try {
-					dbManager.addBicycle(bicycle);
+					database.addBicycle(userBarcode);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

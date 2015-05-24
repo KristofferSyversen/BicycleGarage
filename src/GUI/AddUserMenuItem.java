@@ -7,17 +7,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import BicycleGarage.BicycleGarageManager;
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 import BicycleGarage.User;
 import Utils.BarcodeGenerator;
 
 public class AddUserMenuItem extends JMenuItem implements ActionListener {
-	private DatabaseManager dbManager;
+	private Database database;
 	private BicycleGarageManager bgm;
 	
-	public AddUserMenuItem(String menuText, DatabaseManager dbManager, BicycleGarageManager bgm){
+	public AddUserMenuItem(String menuText, Database database, BicycleGarageManager bgm){
 		super(menuText);
-		this.dbManager = dbManager;
+		this.database = database;
 		this.bgm = bgm;
 		addActionListener(this);
 	}
@@ -30,7 +30,7 @@ public class AddUserMenuItem extends JMenuItem implements ActionListener {
 			if(id >= 0){
 				try {
 					String barcode = BarcodeGenerator.getCode();
-					dbManager.addUser(new User(name, id, barcode));
+					database.addUser(new User(name, id, barcode));
 					bgm.printBarcode(barcode);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(getParent(), "Fail: " + e.getMessage());
