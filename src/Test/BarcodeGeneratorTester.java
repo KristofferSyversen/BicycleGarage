@@ -19,20 +19,20 @@ public class BarcodeGeneratorTester {
 	@Test
 	public void generateMultipleBarcodes() {
 		ArrayList<String> codes = new ArrayList<String>();
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			codes.add(BarcodeGenerator.getCode());
 		}
-		for(Integer i = 0; i < 100000; i++) {
+		for (Integer i = 1; i < 10000; i++) {
 			String zeros = "";
 			while ((zeros + i).toString().length() < 5) {
 				zeros += "0";
 			}
 
-			assertTrue("Expected " + i + zeros + " but was " + codes.get(i),
-					codes.get(i).equals(i + zeros));
+			assertTrue("Expected " + zeros + i + " but was " + codes.get(i),
+					codes.get(i).equals(zeros + i));
 		}
-		
-		for(int i = 0; i < 100000; i++){
+
+		for (int i = 0; i < 10000; i++) {
 			String zeros = "";
 			while ((zeros + i).toString().length() < 5) {
 				zeros += "0";

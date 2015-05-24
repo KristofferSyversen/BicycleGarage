@@ -26,7 +26,7 @@ public class BarcodeGenerator {
 		takenBarcodes.add(codeNbr);
 		int i = 0;
 		while (takenBarcodes.contains(codeNbr)) {
-			codeNbr += (codeNbr + 1) % 100000;
+			codeNbr = (codeNbr + 1) % 100000;
 			i++;
 			if (i > 100009) {
 				throw new RejectedExecutionException("No available barcodes!");
