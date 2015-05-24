@@ -24,19 +24,8 @@ public class RemoveBicycleMenuItem extends JMenuItem implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-
 			String barcode = JOptionPane
 					.showInputDialog("Enter the barcode of the bicycle to remove: ");
-			
-			try {
-				database.checkOutBicycle(barcode);
-			} catch (Exception e) {
-				//Bicycle was not in garage.
-				JOptionPane.showMessageDialog(getParent(),
-						"Fail: " + e.getMessage());
-			}
-			
-			
 			try {
 				database.removeBicycle(barcode);
 				JOptionPane.showMessageDialog(null, "Bicycle Removed.");

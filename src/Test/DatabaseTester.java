@@ -18,6 +18,7 @@ public class DatabaseTester {
 	private ArrayList<Bicycle> bicycles;
 	private ArrayList<User> users;
 	
+	//TODO Rewrite pretty much everything
 	
 	@Before
 	public void setup(){

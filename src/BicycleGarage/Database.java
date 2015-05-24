@@ -308,17 +308,8 @@ public class Database {
 		user2.addBicycle(mc);
 		user3.addBicycle(hoj);
 		user3.addBicycle(old);
-		bicycles.add(old);
-		bicycles.add(hoj);
-		bicycles.add(mc);
-		bicycles.add(bmx);
 		bicyclesInGarage.add(old);
 		bicyclesInGarage.add(bmx);
-
-		user1.addBicycle(bmx);
-		user1.addBicycle(mc);
-		user2.addBicycle(old);
-		user1.addBicycle(hoj);
 
 		Database database = new Database(users, bicycles, bicyclesInGarage);
 		return database;
