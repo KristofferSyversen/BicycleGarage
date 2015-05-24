@@ -25,23 +25,17 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		String userBarcode = JOptionPane.showInputDialog("To whoom do you which to register the bike?:");
-		if (userBarcode != null) {
-
-			User user = database.getUser(userBarcode);
-			if(user != null) {
-				String barcode = BarcodeGenerator.getCode();
-				Bicycle bicycle = new Bicycle(barcode);
-				user.addBicycle(bicycle);
-				
-				try {
-					database.addBicycle(userBarcode);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		String userBarcode = JOptionPane
+				.showInputDialog("To whoom do you which to register the bike?:");
+		if (userBarcode != null && database.getUser(userBarcode) != null) {
+			try {
+				database.addBicycle(userBarcode);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			//Error message?
+
+			// Error message?
 		}
 	}
 }
