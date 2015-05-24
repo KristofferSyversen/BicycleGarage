@@ -25,7 +25,6 @@ public class BicycleGarage {
 	private ElectronicLock exitLock;
 	private PinCodeTerminal terminal;
 
-	private DatabaseManager dbm;
 	private Database database;
 	private Logger logger;
 
@@ -50,7 +49,6 @@ public class BicycleGarage {
 		//TODO: CHANGE THIS TO THE PARSED INPUT< THIS IS ONLY FOR TESTING.
 		database = Database.getGenericDatabase(); //new Database(databaseFile);
 
-		dbm = new DatabaseManager(database);
 
 		// Register hardware.
 		bgm = new BicycleGarageManager(database, logger);
@@ -78,7 +76,7 @@ public class BicycleGarage {
 
 		
 
-		gui = new GUI(dbm, bgm);
+		gui = new GUI(database, bgm);
 
 	}
 

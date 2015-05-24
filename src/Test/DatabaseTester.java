@@ -66,7 +66,7 @@ public class DatabaseTester {
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
 		
-		database.removeUser(user);
+		database.removeUser(user.getBarcode());
 		assertTrue("Expected 3 but was " + users.size(), users.size() == 3 );
 	}
 	
@@ -86,10 +86,8 @@ public class DatabaseTester {
 		User user = new User("Charlie", 4, BarcodeGenerator.getCode());
 		database.addUser(user);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
-		database.addBicycle(bicycle);
-		user.addBicycle(bicycle);
-		
-		database.removeBicycle(bicycle);
+		database.addBicycle(user.getBarcode());
+		database.removeBicycle(bicycle.getBarcode());
 		assertTrue("Expected 4 but was " + bicycles.size(), bicycles.size() == 4 );
 	}
 	

@@ -19,10 +19,10 @@ import javax.swing.KeyStroke;
 
 import BicycleGarage.Bicycle;
 import BicycleGarage.BicycleGarageManager;
-import BicycleGarage.DatabaseManager;
+import BicycleGarage.Database;
 
 public class GUI {
-	private DatabaseManager ddm;
+	private Database db;
 	private BicycleGarageManager bgm;
 
 	private JList<String> itemList;
@@ -36,8 +36,8 @@ public class GUI {
 	private JRadioButtonMenuItem rbMenuItem;
 	private JCheckBoxMenuItem cbMenuItem;
 
-	public GUI(DatabaseManager ddm, BicycleGarageManager bgm) {
-		this.ddm = ddm;
+	public GUI(Database db, BicycleGarageManager bgm) {
+		this.db = db;
 		this.bgm = bgm;
 
 		JFrame mainFrame = new JFrame(
@@ -49,7 +49,7 @@ public class GUI {
 		statusBar = new JLabel();
 
 		statusBar.setText("Bicycles in the garage.");
-		for (Bicycle bicycle : ddm.getBicycleInGarageList()) {
+		for (Bicycle bicycle : db.getBicyclesInGarageList()) {
 			listModel.addElement(bicycle.toString());
 		}
 
@@ -67,7 +67,7 @@ public class GUI {
 		menuBar.add(menu);
 
 		// Save database to file.
-		menuItem = new SaveDatabaseToFileMenuItem("Save database to file.", ddm);
+		menuItem = new SaveDatabaseToFileMenuItem("Save database to file.", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext()
@@ -75,7 +75,7 @@ public class GUI {
 		menu.add(menuItem);	
 		
 		// Load database to file.
-		menuItem = new LoadDatabaseFromFileMenuItem("Load database from file.", ddm);
+		menuItem = new LoadDatabaseFromFileMenuItem("Load database from file.", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext()
@@ -109,7 +109,7 @@ public class GUI {
 		menuBar.add(menu);
 
 		// Add user
-		menuItem = new AddUserMenuItem("Add user", ddm, bgm);
+		menuItem = new AddUserMenuItem("Add user", db, bgm);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -117,7 +117,7 @@ public class GUI {
 		menu.add(menuItem);
 		
 		// Add bicycle
-		menuItem = new AddBicycleMenuItem("Add bicycle", ddm, bgm);
+		menuItem = new AddBicycleMenuItem("Add bicycle", db, bgm);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -125,7 +125,7 @@ public class GUI {
 		menu.add(menuItem);
 
 		// Remove user
-		menuItem = new RemoveUserMenuItem("Remove user", ddm);
+		menuItem = new RemoveUserMenuItem("Remove user", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -133,7 +133,7 @@ public class GUI {
 		menu.add(menuItem);
 
 		// Remove bicycle
-		menuItem = new RemoveBicycleMenuItem("Remove bicycle", ddm);
+		menuItem = new RemoveBicycleMenuItem("Remove bicycle", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -141,7 +141,7 @@ public class GUI {
 		menu.add(menuItem);
 		
 		// Check in bicycle
-		menuItem = new CheckInBicycleMenuItem("Check in bicycle", ddm);
+		menuItem = new CheckInBicycleMenuItem("Check in bicycle", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -149,7 +149,7 @@ public class GUI {
 		menu.add(menuItem);
 
 		// Check out bicycle
-		menuItem = new CheckOutBicycleMenuItem("Check out bicycle", ddm);
+		menuItem = new CheckOutBicycleMenuItem("Check out bicycle", db);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -166,7 +166,7 @@ public class GUI {
 		menuBar.add(menu);
 
 		// List Users
-		menuItem = new ChangeListContentMenuItem("List users", ddm, statusBar,
+		menuItem = new ChangeListContentMenuItem("List users", db, statusBar,
 				listModel, 0);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
 				ActionEvent.ALT_MASK));
@@ -175,7 +175,7 @@ public class GUI {
 		menu.add(menuItem);
 
 		// List all bicycles
-		menuItem = new ChangeListContentMenuItem("List bicycles", ddm,
+		menuItem = new ChangeListContentMenuItem("List bicycles", db,
 				statusBar, listModel, 1);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
 				ActionEvent.ALT_MASK));
@@ -185,7 +185,7 @@ public class GUI {
 
 		// List bicycles in garage
 		menuItem = new ChangeListContentMenuItem("List bicycles in garage",
-				ddm, statusBar, listModel, 2);
+				db, statusBar, listModel, 2);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
