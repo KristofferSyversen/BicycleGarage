@@ -2,7 +2,7 @@ package BicycleGarage;
 
 import java.util.ArrayList;
 
-public class User {
+public class User implements Comparable{
 	private String name;
 	private int id;
 	private String barcode;
@@ -51,7 +51,15 @@ public class User {
 	public boolean equals(User u) {
 		return this.barcode.equals(u.getBarcode());
 	}
-
+	
+	public int compareTo(Object user){
+		if(user instanceof User){
+			User u = (User) user;
+			return this.name.compareTo(u.name);
+		}
+		throw new IllegalArgumentException("Users can only be compared to users");
+	}
+	
 	public String toString() {
 		return name + " id: " + id + " barcode number: " + barcode + " #bikes: " + bicycles.size() ;
 	}

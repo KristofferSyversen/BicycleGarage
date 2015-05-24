@@ -23,9 +23,10 @@ public class UnlockDoorMenuItem extends JMenuItem implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		int time = 0;
 		try {
-			time = Integer.parseInt(JOptionPane.showInputDialog("Open for how long?"));
+			time = Integer.parseInt(JOptionPane.showInputDialog("Open for how long? (seconds)"));
 		} catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(null, "Please enter a number");
+			return;
 		}
 		
 		//Entry

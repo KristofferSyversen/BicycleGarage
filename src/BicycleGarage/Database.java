@@ -1,6 +1,7 @@
 package BicycleGarage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import Utils.BarcodeGenerator;
 import Utils.FileIO;
@@ -233,6 +234,7 @@ public class Database {
 
 
 	public ArrayList<User> getUserList() {
+		Collections.sort(users);
 		return users;
 	}
 
