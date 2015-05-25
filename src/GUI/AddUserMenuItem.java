@@ -10,6 +10,7 @@ import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.Database;
 import BicycleGarage.User;
 import Utils.BarcodeGenerator;
+import Utils.Constants;
 
 public class AddUserMenuItem extends JMenuItem implements ActionListener {
 	private Database database;
@@ -32,6 +33,7 @@ public class AddUserMenuItem extends JMenuItem implements ActionListener {
 					String barcode = BarcodeGenerator.getCode();
 					database.addUser(new User(name, id, barcode));
 					bgm.printBarcode(barcode);
+					database.writeToFile(Constants.DATABASE_FILE_NAME);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(getParent(), "Fail: " + e.getMessage());
 					

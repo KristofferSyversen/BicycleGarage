@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import Utils.Constants;
 import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.Database;
 
@@ -28,6 +29,7 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 			try {
 				database.addBicycle(userBarcode);
 				bgm.printBarcode(userBarcode);
+				database.writeToFile(Constants.DATABASE_FILE_NAME);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getParent(), "Fail: " + e.getMessage());
 			}

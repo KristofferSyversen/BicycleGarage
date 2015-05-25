@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
+import Utils.Constants;
 import BicycleGarage.Database;
 
 public class RemoveBicycleMenuItem extends JMenuItem implements ActionListener {
@@ -29,6 +30,7 @@ public class RemoveBicycleMenuItem extends JMenuItem implements ActionListener {
 			try {
 				database.removeBicycle(barcode);
 				JOptionPane.showMessageDialog(null, "Bicycle Removed.");
+				database.writeToFile(Constants.DATABASE_FILE_NAME);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getParent(),
 						"Fail: " + e.getMessage());

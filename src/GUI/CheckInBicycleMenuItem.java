@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import Utils.Constants;
 import BicycleGarage.Database;
 
 public class CheckInBicycleMenuItem extends JMenuItem implements ActionListener {
@@ -21,6 +22,7 @@ public class CheckInBicycleMenuItem extends JMenuItem implements ActionListener 
 		String barcode = JOptionPane.showInputDialog("Enter bicycle barcode:");
 		try {
 			database.checkInBicycle(barcode);
+			database.writeToFile(Constants.DATABASE_FILE_NAME);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(getParent(),
 					"Fail: " + e.getMessage());
