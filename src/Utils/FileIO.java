@@ -29,9 +29,10 @@ public class FileIO {
 	public static boolean writeToFile(String filePath, String content){ // fileName?
 		boolean written = false;
 		try{
-			PrintWriter writer = new PrintWriter(filePath);
+			PrintWriter writer = new PrintWriter(new File(filePath));
 			writer.print(content);
 			written = true;
+			writer.close();
 		} catch(IOException e){
 			e.printStackTrace();
 		}

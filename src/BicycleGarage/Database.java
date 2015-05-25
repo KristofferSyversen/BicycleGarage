@@ -125,19 +125,20 @@ public class Database {
 		return field;
 	}
 
-	public boolean writeToFile(String userFile, String bicycleFile) {
+	public boolean writeToFile(String userFile) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
-			sb.append(user.getName() + '%' + user.getId() + '%');
+			sb.append(user.getName() + '%' + user.getId() + '%' + user.getBarcode() + '%');
 			ArrayList<Bicycle> userBicycles = user.getBicycles();
 			for (int j = 0; j < userBicycles.size(); j++) {
-				sb.append(userBicycles.get(i).getBarcode() + '%');
+				sb.append(userBicycles.get(j).getBarcode() + '%');
 			}
+			sb.append('\n');
 		}
-		sb.append("%%%%%" + '\n');
+		sb.append("%%%%%");
 		for (int i = 0; i < bicyclesInGarage.size(); i++) {
-			sb.append(bicyclesInGarage.get(i).getBarcode() + '\n');
+			sb.append('\n' + bicyclesInGarage.get(i).getBarcode());
 		}
 		return FileIO.writeToFile(userFile, sb.toString());
 	}

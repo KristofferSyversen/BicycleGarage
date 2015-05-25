@@ -137,4 +137,29 @@ public class DatabaseTester {
 		assertTrue("Expected false but was " + database.userExists(b),
 				!database.userExists(b));
 	}
+	
+	@Test
+	public void testWriteToFile(){
+		String fileName = "databaseFile.udb";
+		database.writeToFile(fileName);
+		
+		Database db = new Database(fileName);
+		
+		ArrayList<User> databaseUsers = database.getUserList();
+		ArrayList<User> dbUsers = db.getUserList();
+		assertTrue("Expected true but was " + (databaseUsers.size() == dbUsers.size()),
+				databaseUsers.size() == dbUsers.size());
+		for(int i = 0; i < dbUsers.size(); i++){
+			assertTrue(dbUsers.get(i).equals(databaseUsers.get(i)));
+			assertTrue(dbUsers.get(i).getName().equals(databaseUsers.get(i).getName()));
+			
+			ArrayList<Bicycle> databaseBikes = databaseUsers.get(i).getBicycles();
+			ArrayList<Bicycle> dbBikes = dbUsers.get(i).getBicycles();
+			assertTrue(databaseBikes.size() == dbBikes.size());
+			for(int j = 0; j < dbBikes.size(); j++){
+				assertTrue(dbBikes.get(j).equals(databaseBikes.get(j)));
+			}
+		}
+		
+	}
 }
