@@ -1,5 +1,11 @@
 package Utils;
 
+
+/**
+ * Class containing constants as specified in the requirements specification.
+ * @author kristoffer
+ *
+ */
 public class Constants {
 	public static int UNLOCK_TIME = 60;
 	public static int RED_LED_TIME = 15;
