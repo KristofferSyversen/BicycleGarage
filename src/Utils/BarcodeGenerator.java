@@ -39,6 +39,10 @@ public class BarcodeGenerator {
 		codeNbr = newNbr;
 	}
 
+	/**
+	 * Sets the specified barcode as available.
+	 * @param barcode set unavailable
+	 */
 	public static void setBarcodeAsAvailable(String barcode) {
 		int availableNbr = Integer.parseInt(barcode);
 		if (takenBarcodes.contains(availableNbr)) {
@@ -49,12 +53,14 @@ public class BarcodeGenerator {
 		}
 	}
 	
+	/**
+	 * Sets the specified barcode as unavailable.
+	 * @param barcode set unavailable
+	 */
 	public static void setBarcodeAsUnavailable(String barcode) {
 		int unavailableNbr = Integer.parseInt(barcode);
-		System.out.println(takenBarcodes.size());
 		if(!takenBarcodes.contains(unavailableNbr)) {
 			takenBarcodes.add((Integer) unavailableNbr);
 		}
-		System.out.println(takenBarcodes.size() + " - " + unavailableNbr);
 	}
 }
