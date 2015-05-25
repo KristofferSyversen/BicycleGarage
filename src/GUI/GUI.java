@@ -74,14 +74,6 @@ public class GUI {
 				.setAccessibleDescription("Saves the database to a file.");
 		menu.add(menuItem);	
 		
-		// Load database to file.
-		menuItem = new LoadDatabaseFromFileMenuItem("Load database from file.", db);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
-				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext()
-				.setAccessibleDescription("Loads a database from a file.");
-		menu.add(menuItem);
-		
 		// Exit. //TODO: move mechanics to own class.
 		menuItem = new JMenuItem("Exit");
 		menuItem.addActionListener(new ActionListener() {
