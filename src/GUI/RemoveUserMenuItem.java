@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
+import Utils.Constants;
 import BicycleGarage.Database;
 
 public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
@@ -30,6 +31,7 @@ public class RemoveUserMenuItem extends JMenuItem implements ActionListener {
 			try {
 				database.removeUser(barcode);
 				JOptionPane.showMessageDialog(null, "User Removed.");
+				database.writeToFile(Constants.DATABASE_FILE_NAME);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getParent(),
 						"Fail: " + e.getMessage());
