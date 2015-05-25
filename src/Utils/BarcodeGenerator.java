@@ -35,6 +35,10 @@ public class BarcodeGenerator {
 		return barcode.toString();
 	}
 
+	
+	/**
+	 * Sets the seed to newNbr
+	 */
 	public static void setCodeNbr(int newNbr) {
 		codeNbr = newNbr;
 	}
