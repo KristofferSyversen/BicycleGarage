@@ -51,10 +51,8 @@ public class BarcodeGenerator {
 	
 	public static void setBarcodeAsUnavailable(String barcode) {
 		int unavailableNbr = Integer.parseInt(barcode);
-		System.out.println(takenBarcodes.size());
 		if(!takenBarcodes.contains(unavailableNbr)) {
 			takenBarcodes.add((Integer) unavailableNbr);
 		}
-		System.out.println(takenBarcodes.size() + " - " + unavailableNbr);
 	}
 }
