@@ -14,7 +14,6 @@ import HardwareSimulators.BarcodePrinterTestDriver;
 import HardwareSimulators.ElectronicLockTestDriver;
 import HardwareSimulators.PinCodeTerminalTestDriver;
 import Utils.Constants;
-import Utils.Logger;
 import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.Database;
 
@@ -23,7 +22,6 @@ public class BicycleGarageManagerTester {
 	
 	private String logFile = "logFile.log";
 	private Database database;
-	private Logger logger;
 	
 	private BarcodePrinter barcodePrinter;
 	private ElectronicLock entryLock;
@@ -39,7 +37,6 @@ public class BicycleGarageManagerTester {
 	@Before
 	public void setup(){
 		this.database = new Database();
-		this.logger = new Logger(logFile);
 		this.timer = new Timer();
 		this.bgm = new BicycleGarageManager(database);
 		

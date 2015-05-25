@@ -11,8 +11,6 @@ import HardwareSimulators.BarcodeReaderExitTestDriver;
 import HardwareSimulators.ElectronicLockTestDriver;
 import HardwareSimulators.PinCodeTerminalTestDriver;
 import Utils.Constants;
-import Utils.FileIO;
-import Utils.Logger;
 
 /**
  * Main class for Bicycle Garage project.
@@ -27,8 +25,6 @@ public class BicycleGarage {
 	private PinCodeTerminal terminal;
 
 	private Database database;
-	private Logger logger;
-
 	private GUI gui;
 
 	// Get these values from a config file instead.
@@ -41,7 +37,6 @@ public class BicycleGarage {
 
 		// Get filenames from config file instead.
 
-		logger = new Logger(logFile);
 		database = new Database(Constants.DATABASE_FILE_NAME);
 
 		// Register hardware.
