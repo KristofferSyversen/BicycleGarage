@@ -12,17 +12,7 @@ import Utils.FileIO;
  * 
  */
 public class Database {
-	/*
-	 * We have to decide how we want to store user/bike data, we can do eigther
-	 * of the following: * Let each user have a list of bikes. * Have two lists,
-	 * one for bikes and one for users and let the users contain references into
-	 * the bicycles list(and vice versa maybe?). * Another idea?
-	 * 
-	 * We need a way to know which bikes are in the garage, we can eigher use
-	 * boolean tags in the bike isntances or maybe a list in Database containing
-	 * references to bikes in the bicycles list.
-	 */
-	private ArrayList<User> users; // Or some other container class.
+	private ArrayList<User> users;
 	private ArrayList<Bicycle> bicyclesInGarage;
 
 	/**
@@ -39,6 +29,7 @@ public class Database {
 	}
 
 	/**
+	 * Standard constructor, loads previous data as given by user file
 	 * 
 	 * @param userFile
 	 */
@@ -49,11 +40,13 @@ public class Database {
 
 		try {
 			parseData(FileIO.readFromFile(userFile));
-			for(int i = 0; i < users.size(); i++) {
-				BarcodeGenerator.setBarcodeAsUnavailable(users.get(i).getBarcode());
+			for (int i = 0; i < users.size(); i++) {
+				BarcodeGenerator.setBarcodeAsUnavailable(users.get(i)
+						.getBarcode());
 				ArrayList<Bicycle> bicycles = users.get(i).getBicycles();
-				for(int j = 0; j < bicycles.size(); j++) {
-					BarcodeGenerator.setBarcodeAsUnavailable(bicycles.get(j).getBarcode());
+				for (int j = 0; j < bicycles.size(); j++) {
+					BarcodeGenerator.setBarcodeAsUnavailable(bicycles.get(j)
+							.getBarcode());
 				}
 			}
 		} catch (Exception e) {
@@ -61,19 +54,13 @@ public class Database {
 			bicyclesInGarage = new ArrayList<Bicycle>();
 		}
 	}
-
+	/**
+	 * Creates new empty database
+	 */
 	public Database() {
 		users = new ArrayList<User>();
 		bicyclesInGarage = new ArrayList<Bicycle>();
 	}
-
-	/*
-	 * Examples of methods to implement:
-	 * 
-	 * + addUser(User) + removeUser(User) + addBicycle(Bicycle) +
-	 * removeBicycle(Bicycle) + checkOutBicycle(Bicycle) +
-	 * checkInBicycle(Bicycle) + getUserList() + getBikeList()
-	 */
 
 	private void parseData(String data) {
 		if (data.length() != 0) {
@@ -133,11 +120,17 @@ public class Database {
 		return field;
 	}
 
+	/**
+	 * 
+	 * @param userFile
+	 * @return true if file was successfully written
+	 */
 	public boolean writeToFile(String userFile) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
-			sb.append(user.getName() + '%' + user.getId() + '%' + user.getBarcode() + '%');
+			sb.append(user.getName() + '%' + user.getId() + '%'
+					+ user.getBarcode() + '%');
 			ArrayList<Bicycle> userBicycles = user.getBicycles();
 			for (int j = 0; j < userBicycles.size(); j++) {
 				sb.append(userBicycles.get(j).getBarcode() + '%');
@@ -167,23 +160,24 @@ public class Database {
 		User user = getUser(barcode);
 		for (Bicycle b : user.getBicycles()) {
 			if (bicyclesInGarage.contains(b)) {
-				throw new IllegalArgumentException("User has bicycles in garage, remove these first!");
+				throw new IllegalArgumentException(
+						"User has bicycles in garage, remove these first!");
 			}
 		}
-		for(Bicycle b: user.getBicycles()){
+		for (Bicycle b : user.getBicycles()) {
 			BarcodeGenerator.setBarcodeAsAvailable(b.getBarcode());
 		}
 		users.remove(user);
 		BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
 	}
 
-	public Bicycle addBicycle(String userBarcode){
+	public Bicycle addBicycle(String userBarcode) {
 		User user = getUser(userBarcode);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
 		user.addBicycle(bicycle);
 		return bicycle;
 	}
-	
+
 	public void removeBicycle(String barcode) {
 		Bicycle removeBike = getBicycle(barcode);
 		if (bicyclesInGarage.contains(removeBike)) {
@@ -224,10 +218,11 @@ public class Database {
 
 	public void checkOutBicycle(String barcode) {
 		Bicycle bicycle = getBicycle(barcode);
-		if(bicyclesInGarage.contains(bicycle)){
+		if (bicyclesInGarage.contains(bicycle)) {
 			bicyclesInGarage.remove(bicycle);
 		} else {
-			throw new IllegalArgumentException("Bicycle isn't currently in garage!");
+			throw new IllegalArgumentException(
+					"Bicycle isn't currently in garage!");
 		}
 	}
 
@@ -242,59 +237,57 @@ public class Database {
 		throw new IllegalArgumentException("No such bicycle exists!");
 	}
 
-
-
 	public ArrayList<User> getUserList() {
 		Collections.sort(users);
 		return users;
 	}
 
-	public ArrayList<Bicycle> getBicycleList(){
+	public ArrayList<Bicycle> getBicycleList() {
 		ArrayList<Bicycle> bicycles = new ArrayList<Bicycle>();
-		for(User u: users){
+		for (User u : users) {
 			bicycles.addAll(u.getBicycles());
 		}
 		return bicycles;
 	}
-	
+
 	public ArrayList<Bicycle> getBicyclesInGarageList() {
 		return bicyclesInGarage;
 	}
-	
-	public boolean hasBicycleOrUser(String barcode){
-		try{
+
+	public boolean hasBicycleOrUser(String barcode) {
+		try {
 			getUser(barcode);
-		} catch (IllegalArgumentException e){
-			try{
+		} catch (IllegalArgumentException e) {
+			try {
 				getBicycle(barcode);
-			} catch(IllegalArgumentException e2){
+			} catch (IllegalArgumentException e2) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	public boolean bicycleExists(String barcode){
-		try{
+
+	public boolean bicycleExists(String barcode) {
+		try {
 			getBicycle(barcode);
-		} catch (IllegalArgumentException e){
+		} catch (IllegalArgumentException e) {
 			return false;
 		}
 		return true;
 	}
-	
-	public boolean userExists(String barcode){
-		try{
+
+	public boolean userExists(String barcode) {
+		try {
 			getUser(barcode);
-		} catch (IllegalArgumentException e){
+		} catch (IllegalArgumentException e) {
 			return false;
 		}
 		return true;
 	}
-	
-	public boolean isInGarage(String barcode){
-		for(Bicycle b: bicyclesInGarage){
-			if(b.getBarcode().equals(barcode)){
+
+	public boolean isInGarage(String barcode) {
+		for (Bicycle b : bicyclesInGarage) {
+			if (b.getBarcode().equals(barcode)) {
 				return true;
 			}
 		}
