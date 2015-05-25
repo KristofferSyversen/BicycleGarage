@@ -36,7 +36,7 @@ public class Bicycle {
 	
 	
 	/**
-	 * To string override. Returns the bicycle barcode.
+	 * Returns the bicycle barcode.
 	 * @return - String containing the bicycle barcode.
 	 */
 	public String toString() {
