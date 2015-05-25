@@ -10,6 +10,7 @@ import HardwareSimulators.BarcodeReaderEntryTestDriver;
 import HardwareSimulators.BarcodeReaderExitTestDriver;
 import HardwareSimulators.ElectronicLockTestDriver;
 import HardwareSimulators.PinCodeTerminalTestDriver;
+import Utils.Constants;
 import Utils.FileIO;
 import Utils.Logger;
 
@@ -32,7 +33,6 @@ public class BicycleGarage {
 
 	// Get these values from a config file instead.
 	private String logFile = "logFile.log";
-	private String databaseFile = "databaseFile.udb"; // ".User DataBase" file?
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class BicycleGarage {
 		// Get filenames from config file instead.
 
 		logger = new Logger(logFile);
-		database = new Database(databaseFile);
+		database = new Database(Constants.DATABASE_FILE_NAME);
 
 		// Register hardware.
 		bgm = new BicycleGarageManager(database, logger);
