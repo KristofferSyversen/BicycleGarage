@@ -27,12 +27,10 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 		if (userBarcode != null && database.getUser(userBarcode) != null) {
 			try {
 				database.addBicycle(userBarcode);
+				bgm.printBarcode(userBarcode);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(getParent(), "Fail: " + e.getMessage());
 			}
-
-			// Error message?
 		}
 	}
 }
