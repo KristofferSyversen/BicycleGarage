@@ -41,7 +41,7 @@ public class BicycleGarageManagerTester {
 		this.database = new Database();
 		this.logger = new Logger(logFile);
 		this.timer = new Timer();
-		this.bgm = new BicycleGarageManager(database, logger);
+		this.bgm = new BicycleGarageManager(database);
 		
 		this.entryLock = new ElectronicLockTestDriver("Entry lock");
 		this.exitLock = new ElectronicLockTestDriver("Exit lock");

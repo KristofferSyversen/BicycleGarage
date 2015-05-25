@@ -45,7 +45,7 @@ public class BicycleGarage {
 		database = new Database(Constants.DATABASE_FILE_NAME);
 
 		// Register hardware.
-		bgm = new BicycleGarageManager(database, logger);
+		bgm = new BicycleGarageManager(database);
 
 		entryLock = new ElectronicLockTestDriver("Entry lock");
 		exitLock = new ElectronicLockTestDriver("Exit lock");
