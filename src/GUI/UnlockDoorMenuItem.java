@@ -32,12 +32,12 @@ public class UnlockDoorMenuItem extends JMenuItem implements ActionListener {
 		//Entry
 		if(door == 0) {
 			bgm.unlockEntryDoor(time);
-			JOptionPane.showMessageDialog(null, "Unlocking entry door for: " + time + " secounds.");		
+			JOptionPane.showMessageDialog(null, "Unlocking entry door for: " + time + " seconds.");		
 		
 		//Exit
 		} else if(door == 1) {
 			bgm.unlockExitDoor(time);
-			JOptionPane.showMessageDialog(null, "Unlocking exit door for: " + time + " secounds.");
+			JOptionPane.showMessageDialog(null, "Unlocking exit door for: " + time + " seconds.");
 		}
 	}
 }

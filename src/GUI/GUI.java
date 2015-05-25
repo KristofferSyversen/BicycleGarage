@@ -86,7 +86,7 @@ public class GUI {
 		menuItem = new JMenuItem("Exit");
 		menuItem.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent event) {
-	        	int option = JOptionPane.showConfirmDialog(null, "Are you shure you want to exit?");
+	        	int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
 	        	if(option == JOptionPane.YES_OPTION) {
 	        		System.exit(0);	
 	        	}            
