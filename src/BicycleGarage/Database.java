@@ -50,7 +50,8 @@ public class Database {
 		try {
 			parseData(FileIO.readFromFile(userFile));
 		} catch (Exception e) {
-
+			users = new ArrayList<User>();
+			bicyclesInGarage = new ArrayList<Bicycle>();
 		}
 	}
 

@@ -7,10 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class FileIO {
-	
-	public FileIO(String userFile) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public static String readFromFile(String filePath) { // fileName?
 		StringBuilder sb = new StringBuilder();
@@ -34,7 +30,7 @@ public class FileIO {
 			written = true;
 			writer.close();
 		} catch(IOException e){
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return written;
 	}

@@ -166,4 +166,10 @@ public class DatabaseTester {
 			}
 		}
 	}
+	
+	@Test
+	public void testReadNonExistingFile(){
+		Database db = new Database("Not-A-Real-File");
+		assertTrue(db.getUserList().size() == 0);
+	}
 }
