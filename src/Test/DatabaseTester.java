@@ -141,10 +141,15 @@ public class DatabaseTester {
 	@Test
 	public void testWriteToFile(){
 		String fileName = "databaseFile.udb";
-		database.writeToFile(fileName);
+		assertTrue(database.writeToFile(fileName));
+	}
+	
+	@Test
+	public void testReadFromFile(){
+		String fileName = "databaseFile.udb";
+		assertTrue(database.writeToFile(fileName));
 		
 		Database db = new Database(fileName);
-		
 		ArrayList<User> databaseUsers = database.getUserList();
 		ArrayList<User> dbUsers = db.getUserList();
 		assertTrue("Expected true but was " + (databaseUsers.size() == dbUsers.size()),
@@ -160,6 +165,5 @@ public class DatabaseTester {
 				assertTrue(dbBikes.get(j).equals(databaseBikes.get(j)));
 			}
 		}
-		
 	}
 }
