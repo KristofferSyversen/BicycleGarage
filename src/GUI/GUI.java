@@ -226,6 +226,7 @@ public class GUI {
 		
 
 		mainFrame.pack();
+		mainFrame.setSize(400,300);
 		mainFrame.setVisible(true);
 	}
 

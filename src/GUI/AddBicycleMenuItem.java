@@ -23,7 +23,7 @@ public class AddBicycleMenuItem extends JMenuItem implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 		String userBarcode = JOptionPane
-				.showInputDialog("To whom do you which to register the bike?:");
+				.showInputDialog("To whom do you wish to register the bike? (Barcode)");
 		if (userBarcode != null && database.getUser(userBarcode) != null) {
 			try {
 				database.addBicycle(userBarcode);
