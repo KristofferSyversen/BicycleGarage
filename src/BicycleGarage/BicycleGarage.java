@@ -42,13 +42,7 @@ public class BicycleGarage {
 		// Get filenames from config file instead.
 
 		logger = new Logger(logFile);
-
-		// Load the bicycle and user files into the database.
-
-		
-		//TODO: CHANGE THIS TO THE PARSED INPUT< THIS IS ONLY FOR TESTING.
-		database = Database.getGenericDatabase(); //new Database(databaseFile);
-
+		database = new Database(databaseFile);
 
 		// Register hardware.
 		bgm = new BicycleGarageManager(database, logger);

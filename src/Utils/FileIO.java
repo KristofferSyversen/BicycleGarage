@@ -17,7 +17,7 @@ public class FileIO {
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return sb.toString();
 	}
@@ -30,7 +30,7 @@ public class FileIO {
 			written = true;
 			writer.close();
 		} catch(IOException e){
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 		return written;
 	}
