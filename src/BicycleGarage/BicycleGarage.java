@@ -15,7 +15,7 @@ import Utils.FileIO;
 import Utils.Logger;
 
 /**
- * 
+ * Main class for Bicycle Garage project.
  * @author kristoffer Note to self; maybe this should be be the gui?
  */
 public class BicycleGarage {
@@ -35,7 +35,7 @@ public class BicycleGarage {
 	private String logFile = "logFile.log";
 
 	/**
-	 * 
+	 * Constructor for BicycleGarage.
 	 */
 	public BicycleGarage() {
 
@@ -63,25 +63,15 @@ public class BicycleGarage {
 	}
 
 	/**
-	 * 
+	 * Starts the operator GUI.
 	 */
 	public void startOperatorGUI() {
-		// Start the operator GUI which will use the database.
-
-		
-
 		gui = new GUI(database, bgm);
-
-	}
-
-	public void exit() {
-		// Store all the data and clean up.
 	}
 
 	public static void main(String[] args) {
 		BicycleGarage bg = new 		BicycleGarage();
 
 		bg.startOperatorGUI();
-		bg.exit();
 	}
 }
