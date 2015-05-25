@@ -49,6 +49,13 @@ public class Database {
 
 		try {
 			parseData(FileIO.readFromFile(userFile));
+			for(int i = 0; i < users.size(); i++) {
+				BarcodeGenerator.setBarcodeAsUnavailable(users.get(i).getBarcode());
+				ArrayList<Bicycle> bicycles = users.get(i).getBicycles();
+				for(int j = 0; j < bicycles.size(); j++) {
+					BarcodeGenerator.setBarcodeAsUnavailable(bicycles.get(j).getBarcode());
+				}
+			}
 		} catch (Exception e) {
 			users = new ArrayList<User>();
 			bicyclesInGarage = new ArrayList<Bicycle>();

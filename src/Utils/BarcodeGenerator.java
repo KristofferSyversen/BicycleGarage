@@ -16,14 +16,6 @@ public class BarcodeGenerator {
 	 * @return barcode
 	 */
 	public static String getCode() {
-		barcode = new StringBuilder();
-		barcode.append(codeNbr);
-		barcode.reverse();
-		while (barcode.length() < 5) {
-			barcode.append("0");
-		}
-		barcode.reverse();
-		takenBarcodes.add(codeNbr);
 		int i = 0;
 		while (takenBarcodes.contains(codeNbr)) {
 			codeNbr = (codeNbr + 1) % 100000;
@@ -32,6 +24,14 @@ public class BarcodeGenerator {
 				throw new RejectedExecutionException("No available barcodes!");
 			}
 		}
+		barcode = new StringBuilder();
+		barcode.append(codeNbr);
+		barcode.reverse();
+		while (barcode.length() < 5) {
+			barcode.append("0");
+		}
+		barcode.reverse();
+		takenBarcodes.add(codeNbr);
 		return barcode.toString();
 	}
 
@@ -47,5 +47,14 @@ public class BarcodeGenerator {
 			System.out
 					.println("Warning: tried to set barcode as available which was already available");
 		}
+	}
+	
+	public static void setBarcodeAsUnavailable(String barcode) {
+		int unavailableNbr = Integer.parseInt(barcode);
+		System.out.println(takenBarcodes.size());
+		if(!takenBarcodes.contains(unavailableNbr)) {
+			takenBarcodes.add((Integer) unavailableNbr);
+		}
+		System.out.println(takenBarcodes.size() + " - " + unavailableNbr);
 	}
 }
