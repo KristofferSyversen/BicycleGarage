@@ -7,7 +7,6 @@ import HardwareInterfaces.BarcodePrinter;
 import HardwareInterfaces.ElectronicLock;
 import HardwareInterfaces.PinCodeTerminal;
 import Utils.Constants;
-import Utils.Logger;
 
 /**
  * Class responsible for handling the hardware interfaces.

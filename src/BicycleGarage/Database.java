@@ -16,7 +16,7 @@ public class Database {
 	private ArrayList<Bicycle> bicyclesInGarage;
 
 	/**
-	 * Constructor used primarily for testing
+	 * Constructor used primarily for testing.
 	 * 
 	 * @param users
 	 * @param bicycles
@@ -29,7 +29,7 @@ public class Database {
 	}
 
 	/**
-	 * Standard constructor, loads previous data as given by user file
+	 * Standard constructor, loads previous data as given by user file.
 	 * 
 	 * @param userFile
 	 */
@@ -54,8 +54,9 @@ public class Database {
 			bicyclesInGarage = new ArrayList<Bicycle>();
 		}
 	}
+
 	/**
-	 * Creates new empty database
+	 * Creates new empty database.
 	 */
 	public Database() {
 		users = new ArrayList<User>();
@@ -121,7 +122,10 @@ public class Database {
 	}
 
 	/**
+	 * Writes the database to a .txt file with name specified by the String
+	 * parameter.
 	 * 
+	 * @throws IllegalArgumentException
 	 * @param userFile
 	 * @return true if file was successfully written
 	 */
@@ -145,7 +149,10 @@ public class Database {
 	}
 
 	/**
+	 * Adds a user to the database, throws exception if user barcode is already
+	 * taken.
 	 * 
+	 * @throws IllegalArgumentException
 	 * @param user
 	 */
 	public void addUser(User user) {
@@ -156,6 +163,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Removes user with associated barcode from the database along with their
+	 * bicycles, throws exception if user has bicycles parked in the garage or
+	 * User does not exist.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param barcode
+	 */
 	public void removeUser(String barcode) {
 		User user = getUser(barcode);
 		for (Bicycle b : user.getBicycles()) {
@@ -171,6 +186,14 @@ public class Database {
 		BarcodeGenerator.setBarcodeAsAvailable(user.getBarcode());
 	}
 
+	/**
+	 * Adds a new bicycle to the specified user, throws exception if User does
+	 * not exist.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param userBarcode
+	 * @return the new bicycle
+	 */
 	public Bicycle addBicycle(String userBarcode) {
 		User user = getUser(userBarcode);
 		Bicycle bicycle = new Bicycle(BarcodeGenerator.getCode());
@@ -178,6 +201,13 @@ public class Database {
 		return bicycle;
 	}
 
+	/**
+	 * Removes specified bicycle from associated User, throws exception if
+	 * bicycle is currently parked in the garage or if it doesn't exist.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param barcode
+	 */
 	public void removeBicycle(String barcode) {
 		Bicycle removeBike = getBicycle(barcode);
 		if (bicyclesInGarage.contains(removeBike)) {
@@ -194,6 +224,8 @@ public class Database {
 	}
 
 	/**
+	 * Checks a bicycle into the garage, throws exception if bicycle is already
+	 * in garage or if it doesn't exist.
 	 * 
 	 * @param bicycle
 	 */
@@ -207,6 +239,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Returns User associated with barcode given as parameter. Throws exception
+	 * if no User is found.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param barcode
+	 * @return User associated with barcode
+	 */
 	public User getUser(String barcode) {
 		for (User u : users) {
 			if (u.getBarcode().equals(barcode)) {
@@ -216,6 +256,13 @@ public class Database {
 		throw new IllegalArgumentException("No such user exists!");
 	}
 
+	/**
+	 * Checks out bicycle from garage. Throws exception if bicycle doesn't exist
+	 * or isn't currently parked in the garage.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param barcode
+	 */
 	public void checkOutBicycle(String barcode) {
 		Bicycle bicycle = getBicycle(barcode);
 		if (bicyclesInGarage.contains(bicycle)) {
@@ -226,6 +273,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Returns Bicycle associated with barcode given as parameter. Throws
+	 * exception if no Bicycle is found.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @param barcode
+	 * @return Bicycle associated with barcode
+	 */
 	public Bicycle getBicycle(String barcode) {
 		for (User u : users) {
 			for (Bicycle b : u.getBicycles()) {
@@ -237,11 +292,17 @@ public class Database {
 		throw new IllegalArgumentException("No such bicycle exists!");
 	}
 
+	/**
+	 * @return List of Users in database.
+	 */
 	public ArrayList<User> getUserList() {
 		Collections.sort(users);
 		return users;
 	}
 
+	/**
+	 * @return List of Bicycles in database.
+	 */
 	public ArrayList<Bicycle> getBicycleList() {
 		ArrayList<Bicycle> bicycles = new ArrayList<Bicycle>();
 		for (User u : users) {
@@ -250,10 +311,21 @@ public class Database {
 		return bicycles;
 	}
 
+	/**
+	 * @return List of Bicycles parked in the garage.
+	 */
 	public ArrayList<Bicycle> getBicyclesInGarageList() {
 		return bicyclesInGarage;
 	}
 
+	/**
+	 * Checks whether a User or Bicycle exists associated with barcode
+	 * parameter.
+	 * 
+	 * @param barcode
+	 * @return true if a User or Bicycle with associated barcode exists in the
+	 *         database
+	 */
 	public boolean hasBicycleOrUser(String barcode) {
 		try {
 			getUser(barcode);
@@ -267,6 +339,10 @@ public class Database {
 		return true;
 	}
 
+	/**
+	 * @param barcode
+	 * @return true if a Bicycle with associated barcode exists in the database
+	 */
 	public boolean bicycleExists(String barcode) {
 		try {
 			getBicycle(barcode);
@@ -276,6 +352,10 @@ public class Database {
 		return true;
 	}
 
+	/**
+	 * @param barcode
+	 * @return true if a User with associated barcode exists in the database
+	 */
 	public boolean userExists(String barcode) {
 		try {
 			getUser(barcode);
@@ -285,6 +365,10 @@ public class Database {
 		return true;
 	}
 
+	/**
+	 * @param barcode
+	 * @return true if a Bicycle with associated barcode is parked in the garage
+	 */
 	public boolean isInGarage(String barcode) {
 		for (Bicycle b : bicyclesInGarage) {
 			if (b.getBarcode().equals(barcode)) {
@@ -294,6 +378,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * Returns an example database for testing purposes
+	 * 
+	 * @return A generic database
+	 */
 	public static Database getGenericDatabase() {
 		// Create users
 		ArrayList<User> users = new ArrayList<User>();

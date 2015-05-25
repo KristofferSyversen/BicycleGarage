@@ -5,7 +5,6 @@ import org.junit.Test;
 import BicycleGarage.BicycleGarageManager;
 import BicycleGarage.Database;
 import GUI.GUI;
-import Utils.Logger;
 
 public class GUITest {
 	
